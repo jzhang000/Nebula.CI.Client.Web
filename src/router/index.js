@@ -162,31 +162,23 @@ router.beforeEach(async(to, from, next) => {
         } else {
             // 没有登录的时候跳转到登录界面
             // 携带上登陆成功之后需要跳转的页面完整路径
-            var identifyconfig = {
-                authority: process.env.AUTHORITY_URL ? process.env.AUTHORITY_URL : config.oidcConfig.authority,
-                client_id: "Nebula.Identity",
-                redirect_uri: process.env.CLIENT_URL ? (process.env.CLIENT_URL + "/CallBack") : (config.oidcConfig.redirect_uri + "/CallBack"),
-                response_type: "id_token token",
-                scope: "openid profile api",
-                post_logout_redirect_uri: process.env.CLIENT_URL ? (process.env.CLIENT_URL + "/") : (config.oidcConfig.redirect_uri + "/")
-            };
-            var mgr = new Oidc.UserManager(identifyconfig);
+            var mgr = new Oidc.UserManager(setting.oidcConfig);
             mgr.getUser().then(async function(user) {
-                    if (user) {
-                        cookies.set('username', user.profile.name)
-                        cookies.set('token', user.access_token)
+                if (user) {
+                    cookies.set('username', user.profile.name)
+                    cookies.set('token', user.access_token)
 
-                        next()
-                    } else {
-                        next({
-                            name: 'login',
-                            query: {
-                                redirect: to.fullPath
-                            }
-                        })
-                    }
-                })
-                // https://github.com/d2-projects/d2-admin/issues/138
+                    next()
+                } else {
+                    next({
+                        name: 'login',
+                        query: {
+                            redirect: to.fullPath
+                        }
+                    })
+                }
+            })
+
             NProgress.done()
         }
     } else {

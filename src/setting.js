@@ -1,10 +1,10 @@
 export default {
     oidcConfig: {
-        authority: "http://172.18.67.167:32002",
+        authority: process.env.AUTHORITY_URL ? process.env.AUTHORITY_URL : config.oidcConfig.authority,
         client_id: "Nebula.Identity",
-        redirect_uri: "http://172.18.67.109:4200/CallBack",
+        redirect_uri: process.env.CLIENT_URL ? (process.env.CLIENT_URL + "/CallBack") : (config.oidcConfig.redirect_uri + "/CallBack"),
         response_type: "id_token token",
         scope: "openid profile api",
-        post_logout_redirect_uri: "http://172.18.67.109:4200/"
+        post_logout_redirect_uri: process.env.CLIENT_URL ? (process.env.CLIENT_URL + "/") : (config.oidcConfig.redirect_uri + "/")
     }
 }
