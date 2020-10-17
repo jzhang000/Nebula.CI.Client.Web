@@ -421,8 +421,8 @@
                 })
                 return true
             },
-            clickNode(node) {    
-                this.src = node.configUrl     
+            clickNode(node) {
+                this.src = process.env.API_BASE_URL + node.configUrl     
                 let iframes = document.getElementById('propertyIframe')
                 iframes.onload = () => {
                     this.$refs.iframe.contentWindow.postMessage(
