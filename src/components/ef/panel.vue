@@ -422,7 +422,7 @@
                 return true
             },
             clickNode(node) {
-                this.src = process.env.API_BASE_URL + node.configUrl     
+                this.src = process.env.API_BASE_URL ? process.env.API_BASE_URL : config.baseUrl + node.configUrl     
                 let iframes = document.getElementById('propertyIframe')
                 iframes.onload = () => {
                     this.$refs.iframe.contentWindow.postMessage(

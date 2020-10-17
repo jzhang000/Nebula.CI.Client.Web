@@ -7,14 +7,14 @@ import lodash from "lodash";
 export default {
   data() {
     return {
-      src : process.env.API_BASE_URL + this.$route.params.resultUrl,
+      src : process.env.API_BASE_URL ? process.env.API_BASE_URL : config.baseUrl + this.$route.params.resultUrl,
     };
   },
   mounted(){
     
   },
   beforeRouteUpdate(to,from,next){
-    this.src= process.env.API_BASE_URL + to.params.resultUrl;
+    this.src= process.env.API_BASE_URL ? process.env.API_BASE_URL : config.baseUrl + to.params.resultUrl;
     next();
   }
 }
