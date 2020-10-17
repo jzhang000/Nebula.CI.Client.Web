@@ -11,9 +11,9 @@
           <span slot="customTitle">
             &nbsp;&nbsp;名称
           </span>
-          <span slot="lastStauts" slot-scope="text, record">
-            <img src="/static/32x32/blue.png"  title="构建成功" v-if="record.lastStauts == 'Success'"/>
-            <img src="/static/32x32/nobuilt.png" title="没有构建" v-else-if="record.lastStauts == null"/>
+          <span slot="lastStatus" slot-scope="text, record">
+            <img src="/static/32x32/blue.png"  title="构建成功" v-if="record.lastStatus == 'Succeeded'"/>
+            <img src="/static/32x32/nobuilt.png" title="没有构建" v-else-if="record.lastStatus == null"/>
             <img src="/static/32x32/red.png"  title="构建失败" v-else/>
           </span>
           <span slot="action" slot-scope="text, record">
@@ -36,10 +36,10 @@ const columns = [
   },
   {
     title: "上次构建状态",
-    dataIndex: "lastStauts",
-    key: "lastStauts",
-    scopedSlots: { customRender: "lastStauts" },
-    sorter: (a, b) => a.lastStauts.length - b.lastStauts.length,
+    dataIndex: "lastStatus",
+    key: "lastStatus",
+    scopedSlots: { customRender: "lastStatus" },
+    sorter: (a, b) => a.lastStatus.length - b.lastStatus.length,
   },
   {
     title: "上次成功",
@@ -80,6 +80,8 @@ export default {
         that.data.forEach((item, index) => {
             item.key = index
         })
+
+        console.info(that.data)
     })
   },
   methods: {

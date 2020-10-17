@@ -57,6 +57,7 @@ export default {
     PipelineCreate, buildList
   },
   mounted(){
+    console.info(process)
     if(this.$route.name == "builds"){
         this.selectedkeys = ['3']
     }
