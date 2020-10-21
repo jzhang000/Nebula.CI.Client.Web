@@ -6,6 +6,20 @@
                 <div class="ef-tooltar" >
                     <el-button plain @click="returnPipelinePage" style='background:#447788;color:#ffffff' icon="el-icon-back" size="mini">返回</el-button>
                     <el-button plain @click="savePipeline" style='background:#447788;color:#ffffff' icon="el-icon-edit-outline" size="mini">保存</el-button>
+                    <el-divider direction="vertical"></el-divider>
+                    <el-button type="text" icon="el-icon-delete" @click="deleteElement" :hidden="!this.activeElement.type" style="color:red">删除节点</el-button>
+                    <div style="float: right">
+                        <el-upload
+                            style="float:right;padding-right:150px"
+                            class="upload-demo"
+                            action=""
+                            accept=".json"
+                            :show-file-list="show"
+                            :before-upload="loadPipeline">
+                            <el-button plain style='background:#447788;color:#ffffff;margin-left:15px' icon="el-icon-upload" size="mini">导入Pipeline</el-button>
+                        </el-upload>
+                        <el-button plain @click="downloadData" style='background:#447788;color:#ffffff;' icon="el-icon-download" size="mini">导出Pipeline</el-button>
+                    </div>
                 </div>
             </el-col>
         </el-row>
@@ -51,12 +65,12 @@
     import FlowInfo from './info'
     import FlowNodeForm from './node_form'
     import lodash from 'lodash'
-    import { getDataB } from './data_B'
     import api from '@/api'
 
     export default {
         data() {
             return {
+                show : false,
                 // jsPlumb 实例
                 jsPlumb: null,
                 // 控制画布销毁
@@ -178,14 +192,16 @@
                         }
                     })
 
-                    // 添加快捷键删除
+                    /*/* 添加快捷键删除
                     document.addEventListener('keyup', (conn, originalEventConn) => {
                         let event = originalEventConn || window.event
                         // 8--backspace, 46--delete
-                        if (event.keyCode === 46) {
-                           this.deleteElement()
+                        if (this.activeElement.type === 'node' && event.keyCode === 46) {
+                            alert("为啥会？")
+                           //this.deleteNode(this.activeElement.nodeId)
                         }
                     })
+                    */
 
                     // 删除连线回调
                     this.jsPlumb.bind("connectionDetached", (evt) => {
@@ -285,7 +301,7 @@
             // 删除激活的元素
             deleteElement() {
                 if (this.activeElement.type === 'node') {
-                    this.deleteNode(this.activeElement.nodeId)
+                    this.deleteNode(this.activeElement.nodeId, this.activeElement.nodeName)
                 } else if (this.activeElement.type === 'line') {
                     this.$confirm('确定删除所点击的线吗?', '提示', {
                         confirmButtonText: '确定',
@@ -394,8 +410,8 @@
              * 删除节点
              * @param nodeId 被删除节点的ID
              */
-            deleteNode(nodeId) {
-                this.$confirm('确定要删除节点' + nodeId + '?', '提示', {
+            deleteNode(nodeId, nodeName) {
+                this.$confirm('确定要删除节点 ' + nodeName + '?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning',
@@ -415,6 +431,10 @@
                     this.$nextTick(function () {
                         this.jsPlumb.removeAllEndpoints(nodeId);
                     })
+
+                    this.activeElement.type = null
+                    this.activeElement.nodeId = null
+                    this.activeElement.nodeName = null
 
                     this.src = ""
                 }).catch(() => {
@@ -446,6 +466,7 @@
                 
                 this.activeElement.type = 'node'
                 this.activeElement.nodeId = node.id
+                this.activeElement.nodeName = node.annoName
             },
             // 是否具有该线
             hasLine(from, to) {
@@ -492,6 +513,7 @@
                     data = lodash.cloneDeep(data)
                     this.easyFlowVisible = true
                     this.data = data
+                    this.data.name = this.pipelineName
                     this.$nextTick(() => {
                         this.jsPlumb = jsPlumb.getInstance()
                         this.$nextTick(() => {
@@ -500,14 +522,11 @@
                     })
                 })
             },
-            // 模拟载入数据dataB
-            dataReloadB() {
-                this.dataReload(getDataB())
-            },
+            //返回
             returnPipelinePage(){
                 this.$router.push("/ci/job/" + this.$route.params.pipelineId)
             },
-            // 下载数据
+            // 下载pipeline
             downloadData() {
                 this.$confirm('确定要下载该pipeline配置数据吗？', '提示', {
                     confirmButtonText: '确定',
@@ -518,20 +537,33 @@
                     var datastr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.data, null, '\t'));
                     var downloadAnchorNode = document.createElement('a')
                     downloadAnchorNode.setAttribute("href", datastr);
-                    downloadAnchorNode.setAttribute("download", 'data.json')
+                    downloadAnchorNode.setAttribute("download", this.pipelineName +'.json')
                     downloadAnchorNode.click();
                     downloadAnchorNode.remove();
                     this.$message.success("正在下载中,请稍后...")
                 }).catch(() => {
                 })
             },
+            //导入pipeline
+            loadPipeline(file){
+                const reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = e => {
+                    console.log(e.target.result)
+                    this.dataReload(JSON.parse(e.target.result))
+                };
+
+                return false;
+            },
             handleIframeMessage(event) {
                 let nodelist = this.data.nodeList
-                var node = nodelist.find(a => a.id == this.activeElement.nodeId)
-                if(event.data.cmd == "property"){
-                    node.property = event.data.params.data
-                    this.$message.success("节点 " + node.annoName + " 属性保存成功");
-                }  
+                if(nodelist){
+                    var node = nodelist.find(a => a.id == this.activeElement.nodeId)
+                    if(event.data.cmd == "property"){
+                        node.property = event.data.params.data
+                        this.$message.success("节点 " + node.annoName + " 属性保存成功");
+                    }  
+                }
             },
             savePipeline(){
                 let pipelineData = {name : this.pipelineName, diagram : JSON.stringify(this.data), id :this.$route.params.pipelineId}

@@ -120,7 +120,6 @@ export default {
     },
     loadHistory() {
         let that = this;
-        console.log(that.$route.params.pipelineId)
         if(that.$route.params.pipelineId){
           api.PIPELINE_BUILD_HISTORY_API(that.$route.params.pipelineId).then((res) => {
             res.forEach((item, index) => {

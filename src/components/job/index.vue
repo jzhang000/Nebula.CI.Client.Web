@@ -37,7 +37,11 @@
           <img src="/static/24x24/gear2.png" />
           <span>配置Pipeline</span>
         </a-menu-item>
-        <a-menu-item key="5">
+         <a-menu-item key="5">
+          <img src="/static/24x24/git.png" />
+          <span>配置WebHook</span>
+        </a-menu-item>
+        <a-menu-item key="6">
           <img src="/static/24x24/notepad.png" />
           <span>重命名</span>
         </a-menu-item>
@@ -67,6 +71,7 @@ export default {
       pipelineCreateVisible: false,
       defaultkey : ['1'],
       pipelineId : this.$route.params.pipelineId,
+      webhookUrl: window.location.origin + "/api/ci/services/pipeline/" +  this.$route.params.pipelineId + "/run"
     };
   },
   components: {
@@ -93,6 +98,16 @@ export default {
           });
           break;
         case "5":
+          let that = this;
+          that.$copyText(that.webhookUrl).then(function (e) {
+            that.$message.success('webhook: ' + that.webhookUrl + ' 已复制到剪切板'); 
+          }, function (e) {
+            alert('webhook复制到剪切板失败')
+            console.log(e)
+          })
+
+          break;
+        case "6":
           this.pipelineCreateVisible = true;
 
           this.$nextTick(function () {

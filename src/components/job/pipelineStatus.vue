@@ -111,7 +111,8 @@ export default {
       api.PIPELINE_BUILD_DETAIL_API(id).then((res) => {
         let buildDetailData = []
         let datas = JSON.parse(res.logs);
-        datas.forEach((data) => {
+        if(datas){
+          datas.forEach((data) => {
           let status = "";
           switch (data.Log.Status) {
             case "running":
@@ -151,13 +152,14 @@ export default {
           }
 
           buildDetailData.push(task);
-        });
+          });
 
-        let index = that.buildDatas.findIndex(function (e){
-          return e.id == id
-        })
+          let index = that.buildDatas.findIndex(function (e){
+            return e.id == id
+          })
 
-        that.buildDatas[index].data = buildDetailData
+          that.buildDatas[index].data = buildDetailData
+        }
       });
     },
     getBuildHistory(buildList) {
@@ -171,13 +173,8 @@ export default {
           }
       }
 
-      if(that.buildDatas.length == buildList.length && that.buildDatas[0].id == buildList[0].id){
+      if(buildList.length != 0 && that.buildDatas.length == buildList.length && that.buildDatas[0].id == buildList[0].id){
         that.buildDatas[0].buildTime = buildList[0].buildTime
-      }
-
-      if (that.activeKey[0] != ('' + that.buildDatas[0].id)) {
-        that.activeKey[0] = '' + that.buildDatas[0].id;
-        that.getBuildDetails(that.buildDatas[0].id);
       }
     },
   },

@@ -1,4 +1,6 @@
 <template>
+<div style="height:100%">
+<el-scrollbar style="height:90%;">
 <a-config-provider :locale="locale">
      <a-table
           :columns="columns"
@@ -21,6 +23,8 @@
           </span>
         </a-table>
 </a-config-provider>
+</el-scrollbar>
+</div>
 </template>
 <script>
 import dayjs from 'dayjs'
@@ -38,8 +42,7 @@ const columns = [
     title: "上次构建状态",
     dataIndex: "lastStatus",
     key: "lastStatus",
-    scopedSlots: { customRender: "lastStatus" },
-    sorter: (a, b) => a.lastStatus.length - b.lastStatus.length,
+    scopedSlots: { customRender: "lastStatus" }
   },
   {
     title: "上次成功",
@@ -80,8 +83,6 @@ export default {
         that.data.forEach((item, index) => {
             item.key = index
         })
-
-        console.info(that.data)
     })
   },
   methods: {

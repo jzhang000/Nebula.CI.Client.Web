@@ -15,6 +15,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 //引入构建Pipeline的图形界面样式
 import '@/components/ef/index.css';
 
+import VueClipboard from 'vue-clipboard2'
+
+Vue.use(VueClipboard)
 Vue.use(Antd)
 Vue.use(ElementUI)
 

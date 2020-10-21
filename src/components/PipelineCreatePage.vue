@@ -64,7 +64,10 @@ export default {
               that.dialogVisible = false;
             });
           } else {
-            let pipelineData = { name: that.name, id: that.id, diagram : that.diagram};
+            let diagram = JSON.parse(that.diagram)
+            diagram.name = that.name
+
+            let pipelineData = { name: that.name, id: that.id, diagram : JSON.stringify(diagram)};
             api.SAVE_PIPELINE_API(pipelineData).then((res) => {
               that.$message.success("更新Pipeline成功");
 
