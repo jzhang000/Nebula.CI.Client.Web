@@ -50,6 +50,7 @@ const columns = [
     key: "lastSucceededTime",
     customRender: (text, row, index) => {
         return text ? dayjs(new Date()).diff(dayjs(text),'day') + "天" + ( dayjs(new Date()).diff(dayjs(text),'hour') - dayjs(new Date()).diff(dayjs(text),'day') * 24 ) + "小时" +  + (dayjs(new Date()).diff(dayjs(text),'minute') - dayjs(new Date()).diff(dayjs(text),'hour') * 60) + "分" : "无"
+        //return text ? text : "无"
     },
   },
   {
@@ -58,6 +59,7 @@ const columns = [
     dataIndex: "lastFailedTime",
     customRender: (text, row, index) => {
         return text ? dayjs(new Date()).diff(dayjs(text),'day') + "天" + ( dayjs(new Date()).diff(dayjs(text),'hour') - dayjs(new Date()).diff(dayjs(text),'day') * 24 ) + "小时" +  + (dayjs(new Date()).diff(dayjs(text),'minute') - dayjs(new Date()).diff(dayjs(text),'hour') * 60) + "分" : "无"
+        //return text ? text : "无"
     },
   },
   {

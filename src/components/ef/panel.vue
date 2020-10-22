@@ -62,8 +62,6 @@
     import { easyFlowMixin } from './mixins'
     import flowNode from './node'
     import nodeMenu from './node_menu'
-    import FlowInfo from './info'
-    import FlowNodeForm from './node_form'
     import lodash from 'lodash'
     import api from '@/api'
 
@@ -101,7 +99,7 @@
         // 一些基础配置移动该文件中
         mixins: [easyFlowMixin],
         components: {
-            draggable, flowNode, nodeMenu, FlowInfo, FlowNodeForm
+            draggable, flowNode, nodeMenu
         },
         directives: {
             'flowDrag': {
@@ -442,7 +440,8 @@
                 return true
             },
             clickNode(node) {
-                this.src = process.env.API_BASE_URL ? process.env.API_BASE_URL : config.baseUrl + node.configUrl     
+                //this.src = process.env.API_BASE_URL ? process.env.API_BASE_URL : config.baseUrl + node.configUrl
+                this.src = "http://172.18.67.109:8082"     
                 let iframes = document.getElementById('propertyIframe')
                 iframes.onload = () => {
                     this.$refs.iframe.contentWindow.postMessage(
@@ -561,7 +560,7 @@
                     var node = nodelist.find(a => a.id == this.activeElement.nodeId)
                     if(event.data.cmd == "property"){
                         node.property = event.data.params.data
-                        this.$message.success("节点 " + node.annoName + " 属性保存成功");
+                        //this.$message.success("节点 " + node.annoName + " 属性保存成功");
                     }  
                 }
             },
@@ -569,7 +568,7 @@
                 let pipelineData = {name : this.pipelineName, diagram : JSON.stringify(this.data), id :this.$route.params.pipelineId}
                 api.SAVE_PIPELINE_API(pipelineData).then(res => {
                     this.$message.success('保存pipeline配置成功');
-                    this.$router.push({path: '/ci/job/' + this.$route.params.pipelineId});
+                    //this.$router.push({path: '/ci/job/' + this.$route.params.pipelineId});
                 })
             }
         }

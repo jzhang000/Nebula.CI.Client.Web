@@ -3,6 +3,7 @@
     <a-config-provider :locale="locale">
     <a-collapse v-model="activeKey" expand-icon-position="left" style="height:100%">
       <a-collapse-panel key="1" header="构建历史" style="height:100%">
+        <el-scrollbar style="height:90%;">
         <a-list
           item-layout="vertical"
           size="small"
@@ -27,7 +28,7 @@
                 <img
                   src="/static/16x16/aborted.png"
                   @click="showConsole(item.id)"
-                  title="构建暂停"
+                  title="待执行"
                   v-else-if="item.status=='normal'"
                 />
                 <a-icon type="loading" title="构建中" v-else />
@@ -50,6 +51,7 @@
             </div>
           </a-list-item>
         </a-list>
+        </el-scrollbar>
         <a-icon slot="extra" type="history" @click="showHistory" />
       </a-collapse-panel>
     </a-collapse>

@@ -5,7 +5,7 @@
       <img src="/static/32x32/blue.png"  title="构建成功" v-if="status == 'Succeeded'"/>
       <img src="/static/32x32/nobuilt.png" title="没有构建" v-else-if="status == null"/>
       <img src="/static/32x32/red.png"  title="构建失败" v-else/>
-      第#{{ this.buildNo }}次构建</h1>
+      <strong>{{ pipelineName }}</strong> 第 <b>#{{ this.buildNo }}</b> 次构建</h1>
     <codemirror
                 :value="dialogContent"
                 :options="options"
@@ -20,6 +20,7 @@ import api from '@/api'
 import 'codemirror/lib/codemirror.css'
 import { codemirror } from 'vue-codemirror'
 require("codemirror/mode/javascript/javascript.js")
+import "codemirror/theme/panda-syntax.css"
 export default {
   data() {
     return {
@@ -28,10 +29,10 @@ export default {
       status: null,
       pipelineName : "",
       options: {
-      mode: {
-          name: "text/html"
-      },
-      styleActiveLine: true,
+        mode: {name: "javascript", json: true},
+        styleActiveLine: true,
+        readonly: true,    
+        matchBrackets: true,
       }
     };
   },
@@ -43,10 +44,25 @@ export default {
     api.PIPELINE_BUILD_DETAIL_API(that.$route.params.buildId).then(res => {
         that.status = res.status
         that.buildNo = res.no + ""
+        that.pipelineName = res.pipelineName
+
+        that.dialogContent += "Pipeline " + res.pipelineName + " 执行日志: \n" + "----------------------------\n开始时间:" + res.startTime + "\n结束时间:" + res.completionTime + "\n"
+        if(res.message){
+          that.dialogContent += "执行日志:\n" + res.message
+        }
+        that.dialogContent += "\n\n"
+
         let logs = JSON.parse(res.logs)
-        logs.forEach(task =>{
-            that.dialogContent += "节点名称:" + task.TaskAnnoName + "\n开始时间:" + task.Log.StartTime + "\n完成时间:" + task.Log.CompletionTime + "\n" + "执行状态:" + task.Log.Status + "\n" + "执行日志:\n" + task.Log.Content + "\n"
-        })
+        if(logs){
+          that.dialogContent += "节点执行日志:\n" + "----------------------------\n"
+          logs.forEach(task =>{
+            if(task.Log){
+              that.dialogContent += "节点名称:" + task.TaskAnnoName + "\n开始时间:" + task.Log.StartTime + "\n完成时间:" + task.Log.CompletionTime + "\n" + "执行状态:" + task.Log.Status + "\n" + "执行日志:\n" + task.Log.Content + "\n"
+            } else {
+              that.dialogContent += "节点名称:" + task.TaskAnnoName + "\n执行状态:未执行"
+            }
+          })
+        }
     })
   },
   beforeRouteUpdate(to,from,next){

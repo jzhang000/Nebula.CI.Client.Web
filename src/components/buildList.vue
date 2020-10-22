@@ -13,7 +13,7 @@
             <div>
               <el-link :underline="false"><img src="/static/16x16/red.png" title="构建失败" v-if="item.status == 'exception'"/>
               <img src="/static/16x16/blue.png"  title="构建成功" v-else-if="item.status == 'success'" />
-              <img src="/static/16x16/aborted.png"  title="构建暂停" v-else-if="item.status == 'normal'"/>
+              <img src="/static/16x16/aborted.png"  title="待执行" v-else-if="item.status == 'normal'"/>
               <a-icon type="loading" title="构建中" v-else/> </el-link>
               <el-link :underline="false" @click="showStatus(item.pipelineId)" style="padding-top:3px">#{{ item.pipelineName }}</el-link>
               <el-link :underline="false" @click="showBuilds(item.pipelineId, item.id)" style="padding-top:3px;padding-left:30px">#{{ item.no }}</el-link>

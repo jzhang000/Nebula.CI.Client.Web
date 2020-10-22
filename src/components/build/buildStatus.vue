@@ -38,6 +38,7 @@
 </template>
 <script>
 import "codemirror/lib/codemirror.css";
+import "codemirror/theme/panda-syntax.css"
 import { codemirror } from "vue-codemirror";
 require("codemirror/mode/javascript/javascript.js");
 import api from "@/api";
@@ -51,9 +52,11 @@ export default {
       dialogVisible: false,
       dialogContent: "",
       options: {
-        mode: {
-          name: "text/html"},
-        lineNumbers: true
+        mode: {name: "javascript", json: true},
+        lineNumbers: true,
+        readonly: true,    
+        matchBrackets: true,
+        theme:"panda-syntax"
       },
       form: {
         x: 50,
@@ -91,54 +94,86 @@ export default {
       that.buildNum = res.no;
       that.buildTime = res.startTime;
       that.status = res.status;
-
+      
+      that.data = [{name: "开始",status: "start",log: "",hint: "", next:[]}]
       let datas = JSON.parse(res.logs);
-      datas.forEach((data) => {
-        let status = "";
-        switch (data.Log.Status) {
-          case "running":
-            status = "running";
-            break;
-          case "Succeeded":
-            status = "success";
-            break;
-          case "Failed":
-            status = "failure";
-            break;
-          default:
-            status = "paused";
-        }
+      if(datas){
+         datas.forEach((data, index) => {
+            let status = "paused";
+            let execTime = "待执行";
+            if (data.Log) {
+              switch (data.Log.Status) {
+                case "running":
+                  status = "running";
+                  break;
+                case "Succeeded":
+                  status = "success";
+                  break;
+                case "Failed":
+                  status = "failure";
+                  break;
+                default:
+                  status = "paused";
+              }
 
-        let execTime = "执行时间为: " + data.Log.ExecTime;
+              execTime = "执行时间为: " + data.Log.ExecTime;
+            }
 
-        let task = {
-          name: data.TaskAnnoName,
-          status: status,
-          log: data.Log,
-          hint: execTime,
-        };
-        let next = [];
-        let nextShapes = data.NextShapes;
-        nextShapes.forEach((shapeId) => {
-          let i = datas.findIndex(function (item) {
-            return item.ShapeId == shapeId; //如果返回true，那么findIndex方法会将这个item对应的id返回到外面接受
+            let nodeWeight = 0;
+            if (data.Log && data.Log.Status == "Succeeded") {
+              nodeWeight = 2;
+            }
+
+            let task = {
+              name: data.TaskAnnoName,
+              status: status,
+              log: data.Log,
+              hint: execTime,
+            };
+            let next = [];
+            let nextShapes = data.NextShapes;
+            if(nextShapes.length > 0) {
+              nextShapes.forEach((shapeId) => {
+              let i = datas.findIndex(function (item) {
+                return item.ShapeId == shapeId; //如果返回true，那么findIndex方法会将这个item对应的id返回到外面接受
+              });
+
+              let shape = datas.find((e) => e.ShapeId == shapeId);
+              let weight = 0;
+              if (shape.Log && shape.Log.Status == "Succeeded") {
+                weight = 2;
+              }
+
+              next.push({ index: i + 1, weight: weight });
+              });
+            } else {
+              next.push({ index: datas.length + 1, weight:nodeWeight})
+            }
+
+            task["next"] = next;
+            that.data.push(task);
+            //判断是否为开始后的节点
+            let firstNode = datas.find(function(item){
+              let nextShapes = item.NextShapes
+              if(nextShapes.length != 0){
+                let targetnodeIndex = nextShapes.findIndex(n => n === data.ShapeId)
+                if(targetnodeIndex == -1){
+                  return false
+                } else {
+                  return true
+                }
+              } else {
+                return false
+              }
+            })
+            
+            if(!firstNode){
+              that.data[0].next.push({ index: index + 1, weight: nodeWeight })
+            }
           });
 
-          let shape = datas.find((e) => e.ShapeId == shapeId);
-          let weight = 0;
-          if (shape.Log.Status == "Succeeded") {
-            weight = 2;
-          }
-
-          next.push({ index: i, weight: weight });
-        });
-
-        if (next.length != 0) {
-          task["next"] = next;
-        }
-
-        that.data.push(task);
-      });
+          that.data.push({name: "结束", status: "end", log: "", hint: "", next: []})
+      }
     });
   },
 };
