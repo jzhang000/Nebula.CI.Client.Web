@@ -1,16 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import HomePage from '@/components/HomePage'
 import pipelineTable from '@/components/pipelineTable'
+import builds from '@/components/builds'
+
 import pipelineDiagram from '@/components/ef/panel'
+
 import job from '@/components/job'
 import pipelineStatus from '@/components/job/pipelineStatus'
-import builds from '@/components/builds'
+
 import middle from '@/components/middle'
+
 import build from '@/components/build'
 import buildStatus from '@/components/build/buildStatus'
 import plugin from '@/components/build/plugin'
-
+import fileBrowser from '@/components/build/fileBrowser'
 import console from '@/components/build/console'
 
 import CallBack from '@/components/oidc/CallBack'
@@ -123,6 +128,15 @@ const router = new Router({
                                 auth: true
                             },
                             component: plugin
+                        },
+                        {
+                            path: 'filebrowser',
+                            name: 'filebrowser',
+                            meta: {
+                                title: '文件浏览',
+                                auth: true
+                            },
+                            component: fileBrowser
                         }
                     ]
                 },

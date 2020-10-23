@@ -42,6 +42,10 @@
             <span href="#">删除构建#{{this.buildNo}}</span>
           </a-popconfirm>
         </a-menu-item>
+        <a-menu-item key="6">
+          <img src="/static/24x24/folder.png" />
+          <span>文件浏览</span>
+        </a-menu-item>
         <a-menu-item v-for="item in additionalMenu" :key="item.name" @click="pluginClick(item.name, item.resultUrl)">
             <img :src="item.img != '' ? item.img : '/static/24x24/plugin.png'"/>
             <span href="#">{{ item.name }}</span>
@@ -82,6 +86,8 @@ export default {
         this.$router.push({name: "plugin", params:{pluginName : this.$route.params.pluginName, resultUrl : this.additionalMenu.find(item => item.name == this.$route.params.pluginName).resultUrl}});       
     } else if(this.$route.name == "console") {
         this.defaultkey = ['2']
+    } else if(this.$route.name == "filebrowser") {
+        this.defaultkey = ['6']
     } else {
         this.defaultkey = ['1']
     }
@@ -124,7 +130,12 @@ export default {
           this.downloadConfig()
           break;
         case "5":
-          //删除pipeline
+          //删除build
+          break;
+        case "6":
+          let url = "api/ci/plugins/common/result/html?pipelineHistoryId=" + this.$route.params.buildId
+          this.defaultkey = ['6']
+          this.$router.push({name: "filebrowser", params:{resultUrl : url}});
           break;
       }
     },
