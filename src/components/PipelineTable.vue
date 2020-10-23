@@ -9,7 +9,7 @@
           :scroll="{ y: 500 }"
           :rowClassName="rowClassName"
         >
-          <a slot="name" slot-scope="text, record" @click="handlePipelineClick(record.id)" style="font-weight: 600;color:#0b6aa2">{{ text }}</a>
+          <a slot="name" slot-scope="text, record" :title="text" @click="handlePipelineClick(record.id)" style="font-weight: 600;color:#0b6aa2">{{ text }}</a>
           <span slot="customTitle">
             &nbsp;&nbsp;名称
           </span>
@@ -37,27 +37,32 @@ const columns = [
     slots: { title: "customTitle" },
     scopedSlots: { customRender: "name" },
     sorter: (a, b) => a.name.length - b.name.length,
+    ellipsis: true,
   },
   {
-    title: "总构建次数",
+    title: "构建次数",
     dataIndex: "execTimes",
     sorter: (a, b) => a.execTimes - b.execTimes,
+    width:"9.2%"
   },
   {
-    title: "构建成功次数",
+    title: "成功次数",
     dataIndex: "succeededTimes",
     sorter: (a, b) => a.succeededTimes - b.succeededTimes,
+    width:"9.2%"
   },
   {
-    title: "构建失败次数",
+    title: "失败次数",
     dataIndex: "failedTimes",
     sorter: (a, b) => a.failedTimes - b.failedTimes,
+    width:"9.2%"
   },
   {
     title: "上次构建状态",
     dataIndex: "lastStatus",
     key: "lastStatus",
-    scopedSlots: { customRender: "lastStatus" }
+    scopedSlots: { customRender: "lastStatus" },
+    width:"10%"
   },
   {
     title: "上次成功",
@@ -67,6 +72,7 @@ const columns = [
         //return text ? dayjs(new Date()).diff(dayjs(text),'day') + "天" + ( dayjs(new Date()).diff(dayjs(text),'hour') - dayjs(new Date()).diff(dayjs(text),'day') * 24 ) + "小时" +  + (dayjs(new Date()).diff(dayjs(text),'minute') - dayjs(new Date()).diff(dayjs(text),'hour') * 60) + "分" : "无"
         return text ? text : "无"
     },
+    width:"15%"
   },
   {
     title: "上次失败",
@@ -76,11 +82,14 @@ const columns = [
         //return text ? dayjs(new Date()).diff(dayjs(text),'day') + "天" + ( dayjs(new Date()).diff(dayjs(text),'hour') - dayjs(new Date()).diff(dayjs(text),'day') * 24 ) + "小时" +  + (dayjs(new Date()).diff(dayjs(text),'minute') - dayjs(new Date()).diff(dayjs(text),'hour') * 60) + "分" : "无"
         return text ? text : "无"
     },
+    width:"15%"
   },
   {
     title: "",
     key: "action",
     scopedSlots: { customRender: "action" },
+    width:"10%",
+    align:"center"
   },
 ];
 
