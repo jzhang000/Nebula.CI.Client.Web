@@ -27,6 +27,10 @@
           <span>回放</span>
         </a-menu-item>
         <a-menu-item key="4">
+          <img src="/static/24x24/gear2.png" />
+          <span>导出配置</span>
+        </a-menu-item>
+        <a-menu-item key="5">
           <img src="/static/24x24/edit-delete.png" />
           <a-popconfirm
             title="确定要删除本次构建?"
@@ -62,6 +66,7 @@ export default {
     return {
       buildNo:"",
       diagram:"",
+      pipelineName : "",
       defaultkey : ['1'],
       additionalMenu : [
             //{"name" : "git", "resultUrl" : "http://github.com", img : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAB4klEQVRIS7WVoU8jQRTGvzeCHATDFgyKtiQk18slBByIOszZ1uHOnUO1W9Gt2FadwxEMsiBRGDB3gsApSkJC9/6Ao8UgIIR5l2m77ZbO7sxdYN3szLzffO9984bwzh+9c3xYA5yM6xHoizoQg4+7Qd2zOZwVwElXCkTcjAZkoGYDMQJU8O5v/3AuW94QTPsAVkKQDSQRkEqXt0F0IIk379uNHws5b/bl8fkzSemDKN9PV7KSWICTdr8SYW9w2hsxPbX+p+U9qPHCcmlVSvHLRokWkEq730DYHcs50Ua37f9U/xYXvZmnD8/nAOdMkAmAk6nsEPj7pEPopBP4W+F/Z7n8kaRomiBjgFTGLQOox9mvE9R761Xw7m3j2gYyBPR9jmqSt0NAKlO5YiGLChICIakY7o8WfghQm6JydaARwGWAWp3A/xSum18q5VmI0/54NBcFXAC8ZqdAAQAWnIuqIEmtAeCyE/jrPdSwaP+UogEAqAkpz1QMKUQ+MUW9XCZAiHB4164X1br5rNtkRkGn9vXF09hUX+z4dIwwulutvWg6JSZAXMuIbxWv0qUC6PJt6keJzc7mbvx3s7Nxlyn4mE2T/K+tyVs9OBElVQL1rMngI5vXzFpBkjrTnPHJNAUwzf8Fruz4Gbvufl8AAAAASUVORK5CYII="}
@@ -84,6 +89,7 @@ export default {
     api.PIPELINE_BUILD_DETAIL_API(this.$route.params.buildId).then(res => {
         this.buildNo = res.no
         this.diagram = res.diagram
+        this.pipelineName = res.pipelineName
 
         let tasks = JSON.parse(res.logs)
         let diagram = JSON.parse(res.diagram)
@@ -114,6 +120,10 @@ export default {
           this.buidlPipeline()
           break;
         case "4":
+          //导出pipeline配置
+          this.downloadConfig()
+          break;
+        case "5":
           //删除pipeline
           break;
       }
@@ -126,6 +136,7 @@ export default {
         })
     },
     buidlPipeline(){
+      console.log(this.diagram)
       api.REBACK_PIPELINE_API(this.$route.params.pipelineId, this.diagram).then(res =>{
         this.$message.success('回放成功' );
         this.$router.push({path: '/ci/job/' + this.$route.params.pipelineId});
@@ -134,6 +145,23 @@ export default {
     pluginClick(name, url){
         this.defaultkey = [name]
         this.$router.push({name: "plugin", params:{pluginName : name, resultUrl : url}});  
+    },
+    downloadConfig(){
+      this.$confirm('确定要下载该版本pipeline配置数据吗？', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                    closeOnClickModal: false
+                }).then(() => {
+                    var datastr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(JSON.parse(this.diagram), null, '\t'));
+                    var downloadAnchorNode = document.createElement('a')
+                    downloadAnchorNode.setAttribute("href", datastr);
+                    downloadAnchorNode.setAttribute("download", this.pipelineName + "_" + this.buildNo +'.json')
+                    downloadAnchorNode.click();
+                    downloadAnchorNode.remove();
+                    this.$message.success("正在下载中,请稍后...")
+                }).catch(() => {}
+      )
     }
   },
 };

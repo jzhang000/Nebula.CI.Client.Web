@@ -1,25 +1,32 @@
 <template>
-<el-scrollbar style="height:90%;">
     <div style="height:100%;">
     <h1>
       <img src="/static/32x32/blue.png"  title="构建成功" v-if="status == 'Succeeded'"/>
       <img src="/static/32x32/nobuilt.png" title="没有构建" v-else-if="status == null"/>
       <img src="/static/32x32/red.png"  title="构建失败" v-else/>
       <strong>{{ pipelineName }}</strong> 第 <b>#{{ this.buildNo }}</b> 次构建</h1>
-    <codemirror
+      <el-scrollbar style="height:90%;background:#292A2B">
+      <div class="log">
+        <codemirror
                 :value="dialogContent"
                 :options="options"
                 readonly="true"
             ></codemirror>
+      </div>
+      </el-scrollbar>
     </div>
-</el-scrollbar>
 </template>
 <script>
 import lodash from "lodash";
 import api from '@/api'
 import 'codemirror/lib/codemirror.css'
 import { codemirror } from 'vue-codemirror'
+require("codemirror/mode/shell/shell.js")
 require("codemirror/mode/javascript/javascript.js")
+require("codemirror/mode/python/python.js")
+require("codemirror/mode/yaml/yaml.js")
+import "codemirror/theme/idea.css"
+
 import "codemirror/theme/panda-syntax.css"
 export default {
   data() {
@@ -29,10 +36,12 @@ export default {
       status: null,
       pipelineName : "",
       options: {
-        mode: {name: "javascript", json: true},
+        mode: {name: "yaml", json: true},
         styleActiveLine: true,
-        readonly: true,    
+        lineNumbers: true,
+        readOnly: true,    
         matchBrackets: true,
+        theme: "panda-syntax"
       }
     };
   },
@@ -71,4 +80,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+.log{
+  overflow: scroll !important;
+}
+</style>
 

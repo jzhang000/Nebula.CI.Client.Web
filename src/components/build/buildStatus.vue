@@ -24,6 +24,7 @@
             v-model="dialogVisible"
             width="50%"
             style="top: 0px;"
+            :bodyStyle="bodyStyle"
             footer=""
             >
             <!--一个高亮显示的插件-->
@@ -54,7 +55,7 @@ export default {
       options: {
         mode: {name: "javascript", json: true},
         lineNumbers: true,
-        readonly: true,    
+        readOnly: true,    
         matchBrackets: true,
         theme:"panda-syntax"
       },
@@ -71,6 +72,7 @@ export default {
       },
       buildNum: "",
       buildTime: "",
+      bodyStyle:{"padding": "0px"}
     };
   },
   components: {

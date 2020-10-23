@@ -440,8 +440,7 @@
                 return true
             },
             clickNode(node) {
-                //this.src = process.env.API_BASE_URL ? process.env.API_BASE_URL : config.baseUrl + node.configUrl
-                this.src = "http://172.18.67.109:8082"     
+                this.src = process.env.API_BASE_URL ? process.env.API_BASE_URL : config.baseUrl + node.configUrl   
                 let iframes = document.getElementById('propertyIframe')
                 iframes.onload = () => {
                     this.$refs.iframe.contentWindow.postMessage(

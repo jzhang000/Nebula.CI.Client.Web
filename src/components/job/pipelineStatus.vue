@@ -36,6 +36,7 @@
       <a-modal
         :title="title"
         v-model="dialogVisible"
+        :bodyStyle="bodyStyle"
         width="50%"
         style="top: 0px;"
         footer=""
@@ -82,10 +83,11 @@ export default {
       options: {
         mode: {name: "javascript", json: true},
         lineNumbers: true,
-        readonly: true,    
+        readOnly: true,    
         matchBrackets: true,
         theme:"panda-syntax"
       },
+      bodyStyle:{"padding": "0px"}
     };
   },
   components: {
