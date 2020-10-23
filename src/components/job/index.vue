@@ -46,7 +46,9 @@
           <span>重命名</span>
         </a-menu-item>
       </a-menu>
-      <buildHistory />
+      <div style="display: flex;height: calc(100% - 300px);">
+        <buildHistory />
+      </div>
     </a-layout-sider>
     <a-layout>
       <a-layout-content

@@ -1,9 +1,9 @@
 <template>
-  <div style="height:100%">
+<el-scrollbar style="height:90%;">
+  <div style="height: 100%;width:300px;">
     <a-config-provider :locale="locale">
     <a-collapse v-model="activeKey" expand-icon-position="left" style="height:100%">
       <a-collapse-panel key="1" header="构建历史" style="height:100%">
-        <el-scrollbar style="height:90%;">
         <a-list
           item-layout="vertical"
           size="small"
@@ -51,12 +51,12 @@
             </div>
           </a-list-item>
         </a-list>
-        </el-scrollbar>
         <a-icon slot="extra" type="history" @click="showHistory" />
       </a-collapse-panel>
     </a-collapse>
     </a-config-provider>
   </div>
+</el-scrollbar>
 </template>
 <script>
 import dayjs from "dayjs";
@@ -71,7 +71,7 @@ export default {
         onChange: (page) => {
           console.log(page);
         },
-        pageSize: 5,
+        pageSize: 10,
         simple: true,
         hideOnSinglePage: true,
       },
