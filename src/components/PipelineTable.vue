@@ -39,6 +39,21 @@ const columns = [
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
+    title: "总构建次数",
+    dataIndex: "execTimes",
+    sorter: (a, b) => a.execTimes - b.execTimes,
+  },
+  {
+    title: "构建成功次数",
+    dataIndex: "succeededTimes",
+    sorter: (a, b) => a.succeededTimes - b.succeededTimes,
+  },
+  {
+    title: "构建失败次数",
+    dataIndex: "failedTimes",
+    sorter: (a, b) => a.failedTimes - b.failedTimes,
+  },
+  {
     title: "上次构建状态",
     dataIndex: "lastStatus",
     key: "lastStatus",
@@ -49,8 +64,8 @@ const columns = [
     dataIndex: "lastSucceededTime",
     key: "lastSucceededTime",
     customRender: (text, row, index) => {
-        return text ? dayjs(new Date()).diff(dayjs(text),'day') + "天" + ( dayjs(new Date()).diff(dayjs(text),'hour') - dayjs(new Date()).diff(dayjs(text),'day') * 24 ) + "小时" +  + (dayjs(new Date()).diff(dayjs(text),'minute') - dayjs(new Date()).diff(dayjs(text),'hour') * 60) + "分" : "无"
-        //return text ? text : "无"
+        //return text ? dayjs(new Date()).diff(dayjs(text),'day') + "天" + ( dayjs(new Date()).diff(dayjs(text),'hour') - dayjs(new Date()).diff(dayjs(text),'day') * 24 ) + "小时" +  + (dayjs(new Date()).diff(dayjs(text),'minute') - dayjs(new Date()).diff(dayjs(text),'hour') * 60) + "分" : "无"
+        return text ? text : "无"
     },
   },
   {
@@ -58,8 +73,8 @@ const columns = [
     key: "lastFailedTime",
     dataIndex: "lastFailedTime",
     customRender: (text, row, index) => {
-        return text ? dayjs(new Date()).diff(dayjs(text),'day') + "天" + ( dayjs(new Date()).diff(dayjs(text),'hour') - dayjs(new Date()).diff(dayjs(text),'day') * 24 ) + "小时" +  + (dayjs(new Date()).diff(dayjs(text),'minute') - dayjs(new Date()).diff(dayjs(text),'hour') * 60) + "分" : "无"
-        //return text ? text : "无"
+        //return text ? dayjs(new Date()).diff(dayjs(text),'day') + "天" + ( dayjs(new Date()).diff(dayjs(text),'hour') - dayjs(new Date()).diff(dayjs(text),'day') * 24 ) + "小时" +  + (dayjs(new Date()).diff(dayjs(text),'minute') - dayjs(new Date()).diff(dayjs(text),'hour') * 60) + "分" : "无"
+        return text ? text : "无"
     },
   },
   {

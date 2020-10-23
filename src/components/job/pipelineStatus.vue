@@ -57,9 +57,9 @@ import Bus from "@/libs/Bus";
 import dayjs from "dayjs";
 import { MessageBox, Message } from "element-ui";
 import "codemirror/lib/codemirror.css";
-import "codemirror/theme/panda-syntax.css"
 import { codemirror } from "vue-codemirror";
-require("codemirror/mode/javascript/javascript.js");
+require("codemirror/mode/yaml/yaml.js")
+import "codemirror/theme/panda-syntax.css"
 export default {
   data() {
     return {
@@ -81,7 +81,7 @@ export default {
       dialogVisible: false,
       dialogContent: "",
       options: {
-        mode: {name: "javascript", json: true},
+        mode: {name: "yaml", json: true},
         lineNumbers: true,
         readOnly: true,    
         matchBrackets: true,

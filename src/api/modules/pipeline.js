@@ -61,7 +61,7 @@ export default ({ service, request }) => ({
         // 接口请求
         return request({
             url: '/api/ci/services/pipeline/' + pipelineId + '/run',
-            method: 'post',
+            method: 'get',
             port: port
         })
     },
@@ -69,11 +69,8 @@ export default ({ service, request }) => ({
     REBACK_PIPELINE_API(pipelineId, diagram) {
         // 接口请求
         return request({
-            url: '/api/ci/services/pipeline/' + pipelineId + '/run',
-            method: 'post',
-            data: {
-                diagram: diagram
-            },
+            url: '/api/ci/services/pipeline/' + pipelineId + '/run?diagram=' + diagram,
+            method: 'get',
             port: port
         })
     }

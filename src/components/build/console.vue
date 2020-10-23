@@ -21,12 +21,7 @@ import lodash from "lodash";
 import api from '@/api'
 import 'codemirror/lib/codemirror.css'
 import { codemirror } from 'vue-codemirror'
-require("codemirror/mode/shell/shell.js")
-require("codemirror/mode/javascript/javascript.js")
-require("codemirror/mode/python/python.js")
 require("codemirror/mode/yaml/yaml.js")
-import "codemirror/theme/idea.css"
-
 import "codemirror/theme/panda-syntax.css"
 export default {
   data() {

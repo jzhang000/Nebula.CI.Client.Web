@@ -38,10 +38,10 @@
   </div>
 </template>
 <script>
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/panda-syntax.css"
 import { codemirror } from "vue-codemirror";
-require("codemirror/mode/javascript/javascript.js");
+import "codemirror/lib/codemirror.css";
+require("codemirror/mode/yaml/yaml.js")
+import "codemirror/theme/panda-syntax.css"
 import api from "@/api";
 
 export default {
@@ -53,7 +53,7 @@ export default {
       dialogVisible: false,
       dialogContent: "",
       options: {
-        mode: {name: "javascript", json: true},
+        mode: {name: "yaml", json: true},
         lineNumbers: true,
         readOnly: true,    
         matchBrackets: true,
