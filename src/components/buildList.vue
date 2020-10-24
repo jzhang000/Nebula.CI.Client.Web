@@ -16,7 +16,7 @@
               <img src="/static/16x16/aborted.png"  title="待执行" v-else-if="item.status == 'normal'"/>
               <a-icon type="loading" title="构建中" v-else/> </el-link>
               <el-link :underline="false" @click="showStatus(item.pipelineId)" style="padding-top:3px">#{{ item.pipelineName }}</el-link>
-              <el-link :underline="false" @click="showBuilds(item.pipelineId, item.id)" style="padding-top:3px;padding-left:30px">#{{ item.no }}</el-link>
+              <el-link :underline="false" @click="showBuilds(item.pipelineId, item.id)" style="padding-top:3px;padding-left:5px">#{{ item.no }}</el-link>
               <el-link :underline="false" @click="showStatus(item.pipelineId)" style="float:right;padding-top:3px">{{ item.buildTime }}</el-link>
               <a-progress :percent="item.percent" :status="item.status"/>
             </div>

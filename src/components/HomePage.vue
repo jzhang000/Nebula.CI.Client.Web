@@ -4,15 +4,15 @@
     style="height:100vh; position: fixed;width:100%"
   >
     <a-layout-sider
-      width="300px"
-      style="background: #fff;height:100%;width:300px;padding: 1rem 0 2.5rem 0;"
+      width="270px"
+      style="background: #fff;height:100%;width:270px;padding: 1rem 0 2.5rem 0;"
     >
       <a-menu
         @click="handleClick"
         class="menu"
         mode="inline"
         :selectedKeys="selectedkeys"
-        style="width:300px"
+        style="width:270px"
       >
         <a-menu-item key="1">
           <img src="/static/24x24/new-package.png" />

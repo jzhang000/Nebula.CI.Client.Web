@@ -4,8 +4,8 @@
     style="height:100vh; position: fixed;width:100%"
   >
     <a-layout-sider
-      width="300px"
-      :style="{ overflow: 'auto', width:'300px', height: '100vh', position: 'fixed', left: 0, padding:'1rem 0 2.5rem 0', background: '#fff'}"
+      width="270px"
+      :style="{ overflow: 'auto', width:'270px', height: '100vh', position: 'fixed', left: 0, padding:'1rem 0 2.5rem 0', background: '#fff'}"
     >
 
       <a-menu
@@ -13,7 +13,7 @@
         class="menu"
         mode="inline"
         :selectedKeys="defaultkey"
-        style="width:300px">
+        style="width:270px">
         <a-menu-item key="1">
           <img src="/static/24x24/search.png" />
           <span>构建状态</span>
@@ -54,7 +54,7 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-content
-        :style="{ margin: '0 0 4px 302px', padding: '24px', background: '#fff', minHeight: '280px' }">
+        :style="{ margin: '0 0 4px 272px', background: '#fff', minHeight: '280px' }">
         <keep-alive>
           <router-view />
         </keep-alive>
@@ -73,7 +73,8 @@ export default {
       pipelineName : "",
       defaultkey : ['1'],
       additionalMenu : [
-            //{"name" : "git", "resultUrl" : "http://github.com", img : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAB4klEQVRIS7WVoU8jQRTGvzeCHATDFgyKtiQk18slBByIOszZ1uHOnUO1W9Gt2FadwxEMsiBRGDB3gsApSkJC9/6Ao8UgIIR5l2m77ZbO7sxdYN3szLzffO9984bwzh+9c3xYA5yM6xHoizoQg4+7Qd2zOZwVwElXCkTcjAZkoGYDMQJU8O5v/3AuW94QTPsAVkKQDSQRkEqXt0F0IIk379uNHws5b/bl8fkzSemDKN9PV7KSWICTdr8SYW9w2hsxPbX+p+U9qPHCcmlVSvHLRokWkEq730DYHcs50Ua37f9U/xYXvZmnD8/nAOdMkAmAk6nsEPj7pEPopBP4W+F/Z7n8kaRomiBjgFTGLQOox9mvE9R761Xw7m3j2gYyBPR9jmqSt0NAKlO5YiGLChICIakY7o8WfghQm6JydaARwGWAWp3A/xSum18q5VmI0/54NBcFXAC8ZqdAAQAWnIuqIEmtAeCyE/jrPdSwaP+UogEAqAkpz1QMKUQ+MUW9XCZAiHB4164X1br5rNtkRkGn9vXF09hUX+z4dIwwulutvWg6JSZAXMuIbxWv0qUC6PJt6keJzc7mbvx3s7Nxlyn4mE2T/K+tyVs9OBElVQL1rMngI5vXzFpBkjrTnPHJNAUwzf8Fruz4Gbvufl8AAAAASUVORK5CYII="}
+            //{"name" : "git的哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇", "resultUrl" : "http://github.com", img : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAB4klEQVRIS7WVoU8jQRTGvzeCHATDFgyKtiQk18slBByIOszZ1uHOnUO1W9Gt2FadwxEMsiBRGDB3gsApSkJC9/6Ao8UgIIR5l2m77ZbO7sxdYN3szLzffO9984bwzh+9c3xYA5yM6xHoizoQg4+7Qd2zOZwVwElXCkTcjAZkoGYDMQJU8O5v/3AuW94QTPsAVkKQDSQRkEqXt0F0IIk379uNHws5b/bl8fkzSemDKN9PV7KSWICTdr8SYW9w2hsxPbX+p+U9qPHCcmlVSvHLRokWkEq730DYHcs50Ua37f9U/xYXvZmnD8/nAOdMkAmAk6nsEPj7pEPopBP4W+F/Z7n8kaRomiBjgFTGLQOox9mvE9R761Xw7m3j2gYyBPR9jmqSt0NAKlO5YiGLChICIakY7o8WfghQm6JydaARwGWAWp3A/xSum18q5VmI0/54NBcFXAC8ZqdAAQAWnIuqIEmtAeCyE/jrPdSwaP+UogEAqAkpz1QMKUQ+MUW9XCZAiHB4164X1br5rNtkRkGn9vXF09hUX+z4dIwwulutvWg6JSZAXMuIbxWv0qUC6PJt6keJzc7mbvx3s7Nxlyn4mE2T/K+tyVs9OBElVQL1rMngI5vXzFpBkjrTnPHJNAUwzf8Fruz4Gbvufl8AAAAASUVORK5CYII="},
+           
           ],
     };
   },

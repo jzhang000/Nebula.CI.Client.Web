@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%;">
+  <div style="height:100%;padding:24px">
     <el-scrollbar style="height:90%;">
       <span style="font-size:2rem">
             <img src="/static/32x32/blue.png"  title="构建成功" v-if="status == 'Succeeded'"/>

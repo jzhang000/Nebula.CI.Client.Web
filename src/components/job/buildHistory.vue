@@ -1,6 +1,6 @@
 <template>
 <el-scrollbar style="height:90%;">
-  <div style="height: 100%;width:300px;">
+  <div style="height: 100%;width:270px;">
     <a-config-provider :locale="locale">
     <a-collapse v-model="activeKey" expand-icon-position="left" style="height:100%">
       <a-collapse-panel key="1" header="构建历史" style="height:100%">
@@ -11,7 +11,7 @@
           :data-source="listData"
         >
           <a-list-item slot="renderItem" key="item.title" slot-scope="item, index">
-            <div>
+            <div class="buildList">
               <el-link :underline="false">
                 <img
                   src="/static/16x16/red.png"
@@ -40,7 +40,7 @@
               <el-link
                 :underline="false"
                 @click="showStatus(item.id, item.buildTime)"
-                style="padding-top:3px;padding-left:30px"
+                style="padding-top:3px;padding-left:10px"
               >{{ item.buildTime }}</el-link>
               <a
                 slot="actions"

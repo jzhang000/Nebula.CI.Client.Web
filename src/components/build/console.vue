@@ -1,10 +1,11 @@
 <template>
     <div style="height:100%;">
-    <h1>
+    <h1 style="padding:24px 24px 0 0">
       <img src="/static/32x32/blue.png"  title="构建成功" v-if="status == 'Succeeded'"/>
       <img src="/static/32x32/nobuilt.png" title="没有构建" v-else-if="status == null"/>
       <img src="/static/32x32/red.png"  title="构建失败" v-else/>
-      <strong>{{ pipelineName }}</strong> 第 <b>#{{ this.buildNo }}</b> 次构建</h1>
+      <strong>{{ pipelineName }}</strong> 第 <b>#{{ this.buildNo }}</b> 次构建
+    </h1>
       <el-scrollbar style="height:90%;background:#292A2B">
       <div class="log">
         <codemirror
