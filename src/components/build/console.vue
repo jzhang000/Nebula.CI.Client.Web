@@ -64,7 +64,7 @@ export default {
             if(task.Log){
               that.dialogContent += "节点名称:" + task.TaskAnnoName + "\n开始时间:" + task.Log.StartTime + "\n完成时间:" + task.Log.CompletionTime + "\n" + "执行状态:" + task.Log.Status + "\n" + "执行日志:\n" + task.Log.Content + "\n"
             } else {
-              that.dialogContent += "节点名称:" + task.TaskAnnoName + "\n执行状态:未执行"
+              that.dialogContent += "节点名称:" + task.TaskAnnoName + "\n执行状态:未执行\n"
             }
           })
         }

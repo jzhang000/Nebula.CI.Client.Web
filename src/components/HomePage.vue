@@ -22,10 +22,10 @@
           <img src="/static/24x24/user.png" />
           <span>我的Pipeline</span>
         </a-menu-item>
-        <a-menu-item key="3">
+        <!--<a-menu-item key="3">
           <img src="/static/24x24/notepad.png" />
           <span>构建历史</span>
-        </a-menu-item>
+        </a-menu-item>-->
       </a-menu>
       <buildList style="padding-top:32px"/>
     </a-layout-sider>
