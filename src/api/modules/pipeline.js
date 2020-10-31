@@ -73,5 +73,22 @@ export default ({ service, request }) => ({
             method: 'get',
             port: port
         })
+    },
+
+    GET_PIPELINE_INFO(pipelineId) {
+        return request({
+            url: '/api/ci/services/pipeline/' + pipelineId + '/info',
+            method: 'get',
+            port: port
+        })
+    },
+
+    SET_PIPELINE_INFO(pipelineInfo) {
+        return request({
+            url: '/api/ci/services/pipeline/info',
+            method: 'put',
+            port: port,
+            data: JSON.stringify(pipelineInfo)
+        })
     }
 })

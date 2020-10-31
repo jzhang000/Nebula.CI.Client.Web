@@ -9,7 +9,7 @@
     </a>
     <a-menu slot="overlay">
       <a-menu-item>
-        <a @click="logOff"><a-icon type="poweroff" />&nbsp;&nbsp;注销</a>
+        <a @click="logOff" style="font-size:14px"><a-icon type="poweroff" />&nbsp;&nbsp;注销</a>
       </a-menu-item>
     </a-menu>
   </a-dropdown>

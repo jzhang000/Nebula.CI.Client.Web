@@ -11,7 +11,7 @@ npm install
 #更改默认样式
 cp ./static/antd.css ./node_modules/ant-design-vue/dist
 cp ./static/codemirror.css ./node_modules/codemirror/lib
-
+cp ./static/Pipeline.vue ./node_modules/vue-pipeline/src/components
 #环境变量
 API_BASE_URL 服务端数据URL 
 AUTHORITY_URL 授权地址URL

@@ -89,6 +89,8 @@ export default {
         this.defaultkey = ['2']
     } else if(this.$route.name == "filebrowser") {
         this.defaultkey = ['6']
+        let url = "api/ci/plugins/common/result/html?pipelineHistoryId=" + this.$route.params.buildId
+        this.$router.push({name: "filebrowser", params:{resultUrl : url}});
     } else {
         this.defaultkey = ['1']
     }

@@ -80,7 +80,28 @@ export default {
   },
   methods: {
     handleSelect(node) {
-      let content = "节点名称:" + node.name + "\n开始时间:" + node.log.StartTime + "\n完成时间:" + node.log.CompletionTime + "\n" + "执行状态:" + node.log.Status + "\n" + "执行日志为:\n" + node.log.Content
+      let content = ""
+      if(node.log){
+        content =
+        "节点名称:" +
+        node.name +
+        "\n开始时间:" +
+        node.log.StartTime +
+        "\n完成时间:" +
+        node.log.CompletionTime +
+        "\n" +
+        "执行状态:" +
+        node.log.Status +
+        "\n" +
+        "执行日志为:\n" +
+        node.log.Content;
+      } else {
+        content =
+        "节点名称:" +
+        node.name +
+        "\n执行状态:未执行"
+      }
+      
       this.title = node.name + "  日志"
       this.dialogContent = content
       this.dialogVisible = true

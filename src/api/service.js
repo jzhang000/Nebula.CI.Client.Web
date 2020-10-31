@@ -2,6 +2,8 @@ import axios from 'axios'
 import {get } from 'lodash'
 import cookies from '@/libs/util.cookies'
 import { errorLog, errorCreate } from './tools'
+import setting from "@/setting";
+import Oidc from "oidc-client";
 import router from '../router'
 /**
  * @description 创建请求实例
@@ -53,7 +55,9 @@ function createService() {
                     error.message = '请求错误';
                     break
                 case 401:
-                    error.message = '未授权或授权已过期，请重新登录';
+                    error.message = '未授权或授权已过期';
+                    var mgr = new Oidc.UserManager(setting.oidcConfig);
+                    mgr.signoutRedirect();
                     //router.push({ path: '/login' })
                     break
                 case 403:

@@ -13,15 +13,19 @@
         mode="inline"
         :selectedKeys="defaultkey"
         style="width:270px;">
-        <a-menu-item key="1">
+         <a-menu-item key="1">
+          <img src="/static/24x24/projectInfo.png" />
+          <span>项目信息</span>
+        </a-menu-item>
+        <a-menu-item key="2">
           <img src="/static/24x24/search.png" />
           <span>构建状态</span>
         </a-menu-item>
-        <a-menu-item key="2">
+        <a-menu-item key="3">
           <img src="/static/24x24/clock.png" />
           <span>立即构建</span>
         </a-menu-item>
-        <a-menu-item key="3">
+        <a-menu-item key="4">
           <img src="/static/24x24/edit-delete.png" />
           <a-popconfirm
             title="确定要删除该Pipeline?"
@@ -33,15 +37,15 @@
             <span href="#">删除Pipeline</span>
           </a-popconfirm>
         </a-menu-item>
-        <a-menu-item key="4">
+        <a-menu-item key="5">
           <img src="/static/24x24/gear2.png" />
           <span>配置Pipeline</span>
         </a-menu-item>
-         <a-menu-item key="5">
+         <a-menu-item key="6">
           <img src="/static/24x24/git.png" />
           <span>配置WebHook</span>
         </a-menu-item>
-        <a-menu-item key="6">
+        <a-menu-item key="7">
           <img src="/static/24x24/notepad.png" />
           <span>重命名</span>
         </a-menu-item>
@@ -52,7 +56,7 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-content
-        :style="{ margin: '4px 2px', padding: '24px', background: '#fff', minHeight: '280px' }">
+        :style="{ margin: '0px 2px', padding: '24px', background: '#fff', minHeight: '280px' }">
         <keep-alive>
           <router-view />
         </keep-alive>
@@ -64,14 +68,14 @@
 <script>
 import lodash from "lodash";
 import buildHistory from "./buildHistory";
-import PipelineCreate from '../PipelineCreatePage'
+import PipelineCreate from '../common/PipelineCreatePage'
 import api from '@/api'
 
 export default {
   data() {
     return {
       pipelineCreateVisible: false,
-      defaultkey : ['1'],
+      defaultkey : ['2'],
       pipelineId : this.$route.params.pipelineId,
       webhookUrl: window.location.origin + "/api/ci/services/pipeline/" +  this.$route.params.pipelineId + "/run"
     };
@@ -80,26 +84,38 @@ export default {
     buildHistory,PipelineCreate
   },
   mounted(){
-    
+    if(this.$route.name == "status"){
+        this.defaultkey = ['2']
+        this.$router.push({path: "/ci/job/" + this.$route.params.pipelineId + "/status"});       
+    } else if(this.$route.name == "info") {
+        this.defaultkey = ['1']
+        this.$router.push({path: "/ci/job/" + this.$route.params.pipelineId + "/info"});
+    }
   },
   methods: {
     handleClick(e) {
       switch (e.key) {
         case "1":
-          //更改状态
+          this.defaultkey = ['1']
+          this.$router.push({path: "/ci/job/" + this.$route.params.pipelineId + "/info"});
           break;
         case "2":
-          this.buidlPipeline()
+          //更改状态
+          this.defaultkey = ['2']
+          this.$router.push({path: "/ci/job/" + this.$route.params.pipelineId + "/status"});
           break;
         case "3":
+          this.buidlPipeline()
           break;
         case "4":
+          break;
+        case "5":
           //进入diagram页面
           this.$router.push({
             path: "/ci/pipeline/" + this.$route.params.pipelineId + "/configure",
           });
           break;
-        case "5":
+        case "6":
           let that = this;
           that.$copyText(that.webhookUrl).then(function (e) {
             that.$message.success('webhook: ' + that.webhookUrl + ' 已复制到剪切板'); 
@@ -109,7 +125,7 @@ export default {
           })
 
           break;
-        case "6":
+        case "7":
           this.pipelineCreateVisible = true;
 
           this.$nextTick(function () {
@@ -129,8 +145,6 @@ export default {
       api.RUN_PIPELINE_API(this.$route.params.pipelineId).then(res => {
         this.$message.success('Pipeline开始构建');  
       })
-
-      this.defaultkey = ['1']
     }
   },
 };

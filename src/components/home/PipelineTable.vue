@@ -6,7 +6,7 @@
           :columns="columns"
           :data-source="data"
           :pagination="{ pageSize: 10 }"
-          :scroll="{ y: 500 }"
+          
           :rowClassName="rowClassName"
         >
           <a slot="name" slot-scope="text, record" :title="text" @click="handlePipelineClick(record.id)" style="font-weight: 600;color:#0b6aa2">{{ text }}</a>

@@ -58,7 +58,7 @@ export default {
             api.CREATE_PIPELINE_API(that.name).then((res) => {
               that.$message.success("创建Pipeline成功");
 
-              that.$router.push({ path: "/ci/pipeline/" + res.id + "/configure"});
+              that.$router.push({ path: "/ci/job/" + res.id + "/info"});
 
               that.name = "";
               that.dialogVisible = false;

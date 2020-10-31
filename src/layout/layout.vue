@@ -8,6 +8,9 @@
             
           </a>
         </div>
+        <div id="screenfull">
+          <ScreenFull />
+        </div>
         <div id="user">
           <HeaderUser />
         </div>
@@ -25,14 +28,16 @@
 <script>
 import HeaderUser from './components/header-user'
 import Navigation from './components/navigation'
+import ScreenFull from './components/fullscreen'
 export default {
   components: {
     HeaderUser,
-    Navigation
+    Navigation,
+    ScreenFull
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+     
     }
   }
 }
@@ -69,6 +74,12 @@ export default {
     align-items: center;
     position: relative;
     height: 100%;
+}
+
+#screenfull{
+    display: flex;
+    align-items: center;
+    margin-right: 0.5rem;
 }
 
 #user {

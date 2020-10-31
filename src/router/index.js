@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import HomePage from '@/components/HomePage'
-import pipelineTable from '@/components/pipelineTable'
-import builds from '@/components/builds'
+import HomePage from '@/components/home'
+import pipelineTable from '@/components/home/pipelineTable'
+import builds from '@/components/home/builds'
 
 import pipelineDiagram from '@/components/ef/panel'
 
 import job from '@/components/job'
 import pipelineStatus from '@/components/job/pipelineStatus'
+import jobInfo from '@/components/job/projectInfo'
 
-import middle from '@/components/middle'
+import middle from '@/components/common/middle'
 
 import build from '@/components/build'
 import buildStatus from '@/components/build/buildStatus'
@@ -76,17 +77,27 @@ const router = new Router({
                         title: '',
                         auth: true
                     },
-                    redirect: { name: '/' },
+                    redirect: { name: 'status' },
                     component: job,
                     children: [{
-                        path: '/',
-                        name: '/',
-                        meta: {
-                            title: 'Pipeline状态',
-                            auth: true
+                            path: 'info',
+                            name: 'info',
+                            meta: {
+                                title: '工程信息',
+                                auth: true
+                            },
+                            component: jobInfo
                         },
-                        component: pipelineStatus
-                    }]
+                        {
+                            path: 'status',
+                            name: 'status',
+                            meta: {
+                                title: 'Pipeline状态',
+                                auth: true
+                            },
+                            component: pipelineStatus
+                        }
+                    ]
                 },
                 {
                     path: 'ci/pipeline/:pipelineId/configure',

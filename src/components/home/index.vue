@@ -41,7 +41,7 @@
   </a-layout>
 </template>
 <script>
-import PipelineCreate from './PipelineCreatePage'
+import PipelineCreate from '../common/PipelineCreatePage'
 import lodash from 'lodash'
 import buildList from './buildList'
 import api from '@/api'
