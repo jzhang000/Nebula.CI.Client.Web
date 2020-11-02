@@ -16,6 +16,8 @@ cp ./static/Pipeline.vue ./node_modules/vue-pipeline/src/components
 API_BASE_URL 服务端数据URL 
 AUTHORITY_URL 授权地址URL
 CLIENT_URL 客户端URL
+#修改配置文件脚本
+start.sh 依次传入上面环境变量中三个参数
 # serve with hot reload at localhost:8080
 npm run dev
 

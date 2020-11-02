@@ -135,7 +135,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
 .labelDiv {
   padding-top: 30px;
 }
