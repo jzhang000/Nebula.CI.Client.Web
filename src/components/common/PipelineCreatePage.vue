@@ -21,9 +21,14 @@
         <a-radio :value="0"> 否 </a-radio>
         <a-radio :value="1"> 是 </a-radio>
       </a-radio-group>
-      <a-radio-group v-model="templateValue" style="margin-left:10px"  v-show="isTemplateSelected">
-        <a-radio v-for="item in templates" :key="item.id" :value="item.name">{{ item.name }}</a-radio>
-      </a-radio-group>
+      <a-select 
+        v-model="templateValue" style="margin-left:10px;width:210px" 
+        v-show="isTemplateSelected"  
+        :autoClearSearchValue="false"
+        show-search
+        :filter-option="true">
+      <a-select-option v-for="item in templates" :key="item.id" :value="item.name">{{ item.name }}</a-select-option>
+      </a-select>
     </div>
   </a-modal>
 </template>
@@ -60,6 +65,7 @@ export default {
         api.GET_TEMPLATE_PIPELINE().then(res => {
           if(res && res.length > 0){
             that.templates = res;
+            that.templateValue = that.templates[0].name
           }
         })
       }
@@ -69,7 +75,7 @@ export default {
     onChange(e){
       if(e.target.value == 0){
         this.isTemplateSelected = false;
-        this.templateValue = "";
+        this.templateValue = this.templates[0].name;
       } else {
         this.isTemplateSelected = true;
       }
