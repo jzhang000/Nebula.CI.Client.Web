@@ -5,7 +5,7 @@
                 <span class="ef-node-pmenu" @click="menu.open = !menu.open"><i :class="{'el-icon-caret-bottom': menu.open,'el-icon-caret-right': !menu.open}"></i>&nbsp;{{menu.name}}</span>
                 <ul v-show="menu.open" class="ef-node-menu-ul">
                     <draggable @end="end" @start="move" v-model="menu.children" :options="draggableOptions">
-                        <li v-for="subMenu in menu.children" class="ef-node-menu-li" :key="subMenu.id" :type="subMenu.name">
+                        <li v-for="subMenu in menu.children" class="ef-node-menu-li" :key="subMenu.id" :type="subMenu.name" :title="subMenu.annoName">
                             <i :class="subMenu.icon"></i> {{subMenu.annoName}}
                         </li>
                     </draggable>

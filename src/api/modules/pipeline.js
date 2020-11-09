@@ -25,14 +25,14 @@ export default ({ service, request }) => ({
         })
     },
 
-    CREATE_PIPELINE_API(pipelineName) {
+    CREATE_PIPELINE_API(pipelineName, diagram) {
         // 接口请求
         return request({
             url: '/api/ci/services/pipeline',
             method: 'post',
             data: {
                 name: pipelineName,
-                diagram: "{}"
+                diagram: diagram
             },
             port: port
         })
@@ -89,6 +89,22 @@ export default ({ service, request }) => ({
             method: 'put',
             port: port,
             data: JSON.stringify(pipelineInfo)
+        })
+    },
+
+    GET_EXAMPLE_PIPELINE() {
+        return request({
+            url: '/api/ci/services/pipeline/example',
+            method: 'get',
+            port: port,
+        })
+    },
+
+    GET_TEMPLATE_PIPELINE() {
+        return request({
+            url: '/api/ci/services/pipeline/template',
+            method: 'get',
+            port: port,
         })
     }
 })

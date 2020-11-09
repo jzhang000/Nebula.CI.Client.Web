@@ -3,7 +3,8 @@ import Router from 'vue-router'
 
 import HomePage from '@/components/home'
 import pipelineTable from '@/components/home/pipelineTable'
-import builds from '@/components/home/builds'
+import pluginsManage from '@/components/home/pluginsManage'
+import example from '@/components/home/example'
 
 import pipelineDiagram from '@/components/ef/panel'
 
@@ -54,19 +55,28 @@ const router = new Router({
                             path: 'jobView',
                             name: 'jobView',
                             meta: {
-                                title: '我的Pipeline',
+                                title: '我的工作流',
                                 auth: true
                             },
                             component: pipelineTable
                         },
                         {
-                            path: 'builds',
-                            name: 'builds',
+                            path: 'plugin',
+                            name: 'pluginsManage',
                             meta: {
-                                title: '构建历史',
+                                title: '插件管理',
                                 auth: true
                             },
-                            component: builds
+                            component: pluginsManage
+                        },
+                        {
+                            path: 'example',
+                            name: 'example',
+                            meta: {
+                                title: '示例工程',
+                                auth: true
+                            },
+                            component: example
                         }
                     ]
                 },
@@ -92,7 +102,7 @@ const router = new Router({
                             path: 'status',
                             name: 'status',
                             meta: {
-                                title: 'Pipeline状态',
+                                title: '构建状态',
                                 auth: true
                             },
                             component: pipelineStatus
@@ -104,7 +114,7 @@ const router = new Router({
                     name: 'diagram',
                     component: pipelineDiagram,
                     meta: {
-                        title: 'pipeline配置',
+                        title: '工作流配置',
                         auth: true
                     },
                 },
@@ -190,9 +200,10 @@ router.beforeEach(async(to, from, next) => {
             var mgr = new Oidc.UserManager(setting.oidcConfig);
             mgr.getUser().then(async function(user) {
                 if (user) {
-                    cookies.set('username', user.profile.name)
+                    cookies.set('username', user.profile.nickname)
                     cookies.set('token', user.access_token)
-
+                    cookies.set('userId', user.profile.sub)
+                    window.console.log(user)
                     next()
                 } else {
                     next({

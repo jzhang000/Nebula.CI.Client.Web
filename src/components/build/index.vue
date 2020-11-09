@@ -32,15 +32,7 @@
         </a-menu-item>
         <a-menu-item key="5">
           <img src="/static/24x24/edit-delete.png" />
-          <a-popconfirm
-            title="确定要删除本次构建?"
-            ok-text="确定"
-            cancel-text="取消"
-            @confirm="confirm"
-            placement="right"
-            >
-            <span href="#">删除构建#{{this.buildNo}}</span>
-          </a-popconfirm>
+          <span>删除构建#{{this.buildNo}}</span>
         </a-menu-item>
         <a-menu-item key="6">
           <img src="/static/24x24/folder.png" />
@@ -134,6 +126,19 @@ export default {
           break;
         case "5":
           //删除build
+          this.$confirm("确定要删除本次构建吗？", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning",
+            closeOnClickModal: false,
+          })
+            .then(() => {
+              api.DELETE_PIPELINE_BUILD_API(this.$route.params.buildId).then(res => {
+                this.$message.success('删除构建成功');
+                this.$router.push({path: '/ci/job/' + this.$route.params.pipelineId});  
+              })
+            })
+            .catch(() => {});
           break;
         case "6":
           let url = "api/ci/plugins/common/result/html?pipelineHistoryId=" + this.$route.params.buildId
@@ -141,13 +146,6 @@ export default {
           this.$router.push({name: "filebrowser", params:{resultUrl : url}});
           break;
       }
-    },
-    confirm(e) {
-      //api 删除build
-        api.DELETE_PIPELINE_BUILD_API(this.$route.params.buildId).then(res => {
-          this.$message.success('删除构建成功');
-          this.$router.push({path: '/ci/job/' + this.$route.params.pipelineId});  
-        })
     },
     buidlPipeline(){
       console.log(this.diagram)
@@ -161,7 +159,7 @@ export default {
         this.$router.push({name: "plugin", params:{pluginName : name, resultUrl : url}});  
     },
     downloadConfig(){
-      this.$confirm('确定要下载该版本pipeline配置数据吗？', '提示', {
+      this.$confirm('确定要下载该版本工作流配置数据吗？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning',

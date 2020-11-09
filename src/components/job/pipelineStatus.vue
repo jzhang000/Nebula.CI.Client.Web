@@ -2,7 +2,7 @@
   <div style="height: 100%">
     <el-scrollbar style="height: 90%">
       <span style="font-size: 2rem"
-        >Pipeline &nbsp;{{ this.pipelineName }}</span
+        >工作流 &nbsp;{{ this.pipelineName }}</span
       >
       <a-collapse
         accordion

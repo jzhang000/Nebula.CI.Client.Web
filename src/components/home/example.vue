@@ -1,10 +1,9 @@
 <template>
   <div class="rootDiv">
     <div class="header">
-      <a-button type="primary" @click="createPipeline"> <a-icon type="edit" />新建工作流</a-button>
       <a-input-search
         v-model="searchStr"
-        placeholder="输入工作流名称"
+        placeholder="输入示例工作流名称"
         class="input-search"
         @change="onSearch"
         @search="onSearch"
@@ -140,7 +139,7 @@ export default {
   },
   mounted() {
     let that = this;
-    api.GET_PIPELINE_API().then((res) => {
+    api.GET_EXAMPLE_PIPELINE().then((res) => {
       that.data = res;
       that.data.forEach((item, index) => {
         item.key = index;

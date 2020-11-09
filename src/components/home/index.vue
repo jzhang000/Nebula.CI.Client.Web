@@ -14,71 +14,67 @@
         :selectedKeys="selectedkeys"
         style="width:270px"
       >
-        <a-menu-item key="1">
-          <img src="/static/24x24/new-package.png" />
-          <span>新建Pipeline</span>
+         <a-menu-item key="1">
+          <img src="/static/24x24/workflow.png" />
+          <span>我的工作流</span>
         </a-menu-item>
-         <a-menu-item key="2">
-          <img src="/static/24x24/user.png" />
-          <span>我的Pipeline</span>
+        <a-menu-item key="2">
+          <img src="/static/24x24/example.png" />
+          <span>示例</span>
         </a-menu-item>
         <!--<a-menu-item key="3">
-          <img src="/static/24x24/notepad.png" />
-          <span>构建历史</span>
+          <img src="/static/24x24/gear2.png" />
+          <span>插件管理</span>
         </a-menu-item>-->
       </a-menu>
       <buildList style="padding-top:32px"/>
     </a-layout-sider>
     <a-layout>
       <a-layout-content
-        :style="{ margin: '4px 2px', padding: '24px', background: '#fff', minHeight: '280px' }">
+        :style="{ margin: '0px 2px', padding: '24px', background: '#fff', minHeight: '280px' }">
         <keep-alive>
           <router-view />
         </keep-alive>
       </a-layout-content>
     </a-layout>
-    <pipeline-create v-if="pipelineCreateVisible" :id="pipelineId" ref="pipelineCreate"></pipeline-create>
   </a-layout>
 </template>
 <script>
-import PipelineCreate from '../common/PipelineCreatePage'
 import lodash from 'lodash'
 import buildList from './buildList'
 import api from '@/api'
 export default {
   data() {
     return {
-        pipelineCreateVisible: false,
-        pipelineId:"",
-        selectedkeys: ['2']
+      selectedkeys: ['1']
     };
   },
   components: {
-    PipelineCreate, buildList
+    buildList
   },
   mounted(){
-    console.info(process)
-    if(this.$route.name == "builds"){
-        this.selectedkeys = ['3']
+    if(this.$route.name == "pluginsManage"){
+      this.selectedkeys = ['3']
+    } else if(this.$route.name == "example") {
+      this.selectedkeys = ['2']
     }
   },
   methods: {
     handleClick(e) {
       switch (e.key) {
         case "1":
-          this.pipelineCreateVisible = true
-          this.$nextTick(function () {
-            this.$refs.pipelineCreate.init()
-          })
+          this.$router.push({path: '/'});
+          this.selectedkeys = ['1']
           break;
         case "2":
-          this.$router.push({path: '/'});
+          this.$router.push({path: '/ci/index/example'});
           this.selectedkeys = ['2']
           break;
+        /*
         case "3":
-          this.$router.push({path: '/ci/index/builds'});
+          this.$router.push({path: '/ci/index/pluginManage'});
           this.selectedkeys = ['3']
-          break;
+        */
       }
     },
   },

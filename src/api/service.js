@@ -56,8 +56,10 @@ function createService() {
                     break
                 case 401:
                     error.message = '未授权或授权已过期';
+                    /*
                     var mgr = new Oidc.UserManager(setting.oidcConfig);
                     mgr.signoutRedirect();
+                    */
                     //router.push({ path: '/login' })
                     break
                 case 403:

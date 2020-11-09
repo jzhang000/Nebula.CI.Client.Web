@@ -5,7 +5,7 @@
       @click="(e) => e.preventDefault()"
       id="username"
     >
-      {{ username ? `你好 ${username}` : "未登录" }}
+      <a-icon type="user" style="padding-right: 5px"/>{{ username ? `${username}` : "未登录" }}
     </a>
     <a-menu slot="overlay">
       <a-menu-item>
