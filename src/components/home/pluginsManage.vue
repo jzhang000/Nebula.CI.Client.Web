@@ -12,7 +12,7 @@
           v-if="data && data.length"
           :columns="columns"
           :data-source="dataForShow"
-          :pagination="{ pageSize: 100 }"
+          :pagination="{ pageSize: 10 }"
           :defaultExpandAllRows="true"
           :expandIconAsCell="false"
           :expandIconColumnIndex="-1"

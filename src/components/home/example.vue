@@ -14,7 +14,7 @@
         <a-table
           :columns="columns"
           :data-source="dataForShow"
-          :pagination="{ pageSize: 100 }"
+          :pagination="{ pageSize: 10 }"
           :rowClassName="rowClassName"
         >
           <a
