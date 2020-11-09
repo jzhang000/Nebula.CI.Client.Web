@@ -136,6 +136,10 @@ export default {
     },
     getBuildDetails(id) {
       let that = this;
+
+      let index = that.buildDatas.findIndex(function (e) { return e.id == id;});
+      that.buildDatas[index].data = []
+
       api.PIPELINE_BUILD_DETAIL_API(id).then((res) => {
         let buildDetailData = [{name: "开始",status: "start",log: "",hint: "", next:[]}];
         let datas = JSON.parse(res.logs);
@@ -216,10 +220,6 @@ export default {
           });
 
           buildDetailData.push({name: "结束", status: "end", log: "", hint: "", next: []})
-
-          let index = that.buildDatas.findIndex(function (e) {
-            return e.id == id;
-          });
 
           that.buildDatas[index].data = buildDetailData;
           that.buildDatas[index]["message"] = res.message;
