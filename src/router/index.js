@@ -203,7 +203,6 @@ router.beforeEach(async(to, from, next) => {
                     cookies.set('username', user.profile.nickname)
                     cookies.set('token', user.access_token)
                     cookies.set('userId', user.profile.sub)
-                    window.console.log(user)
                     next()
                 } else {
                     next({

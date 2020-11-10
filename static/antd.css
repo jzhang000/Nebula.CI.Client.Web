@@ -13654,7 +13654,7 @@ span.ant-radio+* {
 }
 
 .ant-collapse-content>.ant-collapse-content-box {
-    padding: 0 16px;
+    padding: 0 0 0 16px;
 }
 
 .ant-collapse-content-inactive {

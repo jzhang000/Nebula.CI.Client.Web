@@ -242,12 +242,12 @@ export default {
         }
       }
 
-      if (
-        buildList.length != 0 &&
-        that.buildDatas.length == buildList.length &&
-        that.buildDatas[0].id == buildList[0].id
-      ) {
-        that.buildDatas[0].buildTime = buildList[0].buildTime;
+      if (buildList.length != 0 && that.buildDatas.length == buildList.length && that.buildDatas[0].id == buildList[0].id) {
+        that.buildDatas.forEach((buildData,index) => {
+          if(buildData.buildTime == ""){
+            that.buildDatas[index].buildTime = buildList[index].buildTime
+          }
+        })
       }
     },
   },
