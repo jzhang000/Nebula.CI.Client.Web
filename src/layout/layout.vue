@@ -4,7 +4,7 @@
       <a-col :span="24" id='header'>
         <div id="logo">
           <a id="home-link" href='/' >
-            <img src="/static/logo.png" id="head-icon">
+            <img src="/static/logo20.png" id="head-icon">
             
           </a>
         </div>

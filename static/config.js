@@ -7,5 +7,7 @@ const config = {
         response_type: "id_token token",
         scope: "openid profile api",
         post_logout_redirect_uri: "http://172.18.67.109:4200"
-    }
+    },
+    maxWorkflowNameLength: 20,
+    maxInputLength:50
 }

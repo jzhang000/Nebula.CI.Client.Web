@@ -88,6 +88,7 @@ export default {
       pipelineId: this.$route.params.pipelineId,
       webhookUrl: window.location.origin + "/api/ci/services/pipeline/" + this.$route.params.pipelineId + "/run",
       isExample : false,
+      diagram:"{}"
     };
   },
   components: {
@@ -98,6 +99,8 @@ export default {
     let that = this;
     api.GET_PIPELINE_BY_ID_API(that.$route.params.pipelineId).then(res => {
       if(res){
+        that.diagram = res.diagram
+
         let currentUserId = cookies.get("userId")
         if(res.userId == currentUserId){
           that.isExample = false
@@ -136,7 +139,11 @@ export default {
           });
           break;
         case "3":
-          this.buidlPipeline();
+          if(this.diagram == "" || this.diagram == "{}"){
+            this.$message.error("工作流配置为空，请配置");
+          } else {
+            this.buidlPipeline();
+          }
           break;
         case "4":
           this.$confirm("确定要删除该工作流吗？", "提示", {

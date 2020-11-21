@@ -6,11 +6,15 @@
         ><a-input
           class="leftInput"
           v-model="form.modelName"
+          :maxLength="maxlength"
+          @change="check"
         />
         <label class="rightLabel">软件名称：</label
         ><a-input
           class="rightInput"
           v-model="form.softwareName"
+          :maxLength="maxlength"
+          @change="check"
         />
       </div>
       <div class="labelDiv">
@@ -18,11 +22,15 @@
         ><a-input
           class="leftInput"
           v-model="form.softwareShort"
+          :maxLength="maxlength"
+          @change="check"
         />
         <label class="rightLabel">软件代号：</label
         ><a-input
           class="rightInput"
           v-model="form.softwareCode"
+          :maxLength="maxlength"
+          @change="check"
         />
       </div>
       <div class="labelDiv">
@@ -30,11 +38,15 @@
         ><a-input
           class="leftInput"
           v-model="form.softwareLevel"
+          :maxLength="maxlength"
+          @change="check"
         />
         <label class="rightLabel">所属系统：</label
         ><a-input
           class="rightInput"
           v-model="form.belongedSystem"
+          :maxLength="maxlength"
+          @change="check"
         />
       </div>
       <div class="labelDiv">
@@ -42,11 +54,15 @@
         ><a-input
           class="leftInput"
           v-model="form.runEnvironment"
+          :maxLength="maxlength"
+          @change="check"
         />
         <label class="rightLabel">研制部门：</label
         ><a-input
           class="rightInput"
           v-model="form.developDepartment"
+          :maxLength="maxlength"
+          @change="check"
         />
       </div>
       <div class="labelDiv">
@@ -54,11 +70,15 @@
         ><a-input
           class="leftInput"
           v-model="form.projectChief"
+          :maxLength="maxlength"
+          @change="check"
         />
         <label class="rightLabel">主任设计师：</label
         ><a-input
           class="leftInput"
           v-model="form.chiefDesigner"
+          :maxLength="maxlength"
+          @change="check"
         />
       </div>
       <div class="labelDiv">
@@ -66,6 +86,8 @@
         ><a-input
           class="leftInput"
           v-model="form.developer"
+          :maxLength="maxlength"
+          @change="check"
         />
       </div>
       <div class="btn">
@@ -97,6 +119,8 @@ export default {
         softwareName: "",
         modelName: "",
       },
+      maxlength:config.maxInputLength,
+      noSpecialCharacter: true
     };
   },
   mounted() {
@@ -109,15 +133,20 @@ export default {
   },
   methods: {
     onSubmit() {
-      let that = this;
-      api.SET_PIPELINE_INFO(that.form).then(res =>{
+      if(this.noSpecialCharacter){
+        let that = this;
+        api.SET_PIPELINE_INFO(that.form).then(res =>{
           if(res == ""){
             that.$message.success('保存成功' );  
           }
-      })      
+        })    
+      } else {
+        this.$message.error("不允许特殊字符,请检查")
+      }  
     },
     resetForm() {
       this.form =  {
+        id : this.$route.params.pipelineId,
         developer: "",
         chiefDesigner: "",
         projectChief: "",
@@ -131,6 +160,15 @@ export default {
         modelName: "",
       }
     },
+    check(value){
+      var reg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/
+      if(value.data && !reg.test(value.data)){
+        this.$message.error("不允许特殊字符")
+        this.isHaveSpecialCharacter = false
+      } else {
+        this.isHaveSpecialCharacter = true
+      }
+    }
   },
 };
 </script>

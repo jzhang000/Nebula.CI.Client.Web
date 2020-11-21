@@ -195,6 +195,6 @@ export default {
 .build-history {
   display: flex;
   overflow: auto;
-  height: 370px;
+  height: 300px;
 }
 </style>

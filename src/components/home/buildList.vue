@@ -3,6 +3,7 @@
     <a-config-provider :locale="locale">
     <a-collapse v-model="activeKey" expand-icon-position="left" style="height:100%">
       <a-collapse-panel key="1" header="构建执行状态" style="height:100%">
+        <div class="build-history">
         <a-list
           item-layout="vertical"
           size="small"
@@ -22,6 +23,7 @@
             </div>
           </a-list-item>
         </a-list>
+        </div>
       </a-collapse-panel>
     </a-collapse>
     </a-config-provider>
@@ -91,3 +93,10 @@ export default {
   }
 };
 </script>
+<style scoped>
+.build-history {
+  display: flex;
+  overflow: auto;
+  height: 570px;
+}
+</style>

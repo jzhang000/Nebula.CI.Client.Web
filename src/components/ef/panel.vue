@@ -206,30 +206,28 @@ export default {
   mounted() {
     window.addEventListener("message", this.handleIframeMessage);
 
-    this.jsPlumb = jsPlumb.getInstance();
-    this.$nextTick(() => {
-      // 默认加载流程A的数据、在这里可以根据具体的业务返回符合流程数据格式的数据即可
-      //判断是否当前页面刷新，如果刷新会丢失pipelineList数据，需要重新拉取数据
-      api.GET_PIPELINE_BY_ID_API(this.$route.params.pipelineId).then((res) => {
-        this.pipelineName = res.name;
-        if (res.diagram == "{}" || res.diagram == "" || res.diagram == null) {
-          this.dataReload({ name: res.name, nodeList: [], lineList: [] });
-        } else {
-          this.dataReload(JSON.parse(res.diagram));
+    let that = this;
+    that.jsPlumb = jsPlumb.getInstance();
+    that.$nextTick(() => {
+      //加载配置数据
+      api.GET_PIPELINE_BY_ID_API(that.$route.params.pipelineId).then((res) => {
+        if (res) {
+          that.pipelineName = res.name;     
+
+          if (res.diagram == "{}" || res.diagram == "" || res.diagram == null) {
+            that.dataReload({ name: res.name, nodeList: [], lineList: [] });
+          } else {
+            that.dataReload(JSON.parse(res.diagram));
+          }
+
+          let currentUserId = cookies.get("userId");
+          if (res.userId == currentUserId) {
+            that.isExample = false;
+          } else {
+            that.isExample = true;
+          }
         }
       });
-    });
-
-    let that = this;
-    api.GET_PIPELINE_BY_ID_API(that.$route.params.pipelineId).then((res) => {
-      if (res) {
-        let currentUserId = cookies.get("userId");
-        if (res.userId == currentUserId) {
-          that.isExample = false;
-        } else {
-          that.isExample = true;
-        }
-      }
     });
   },
   methods: {
@@ -639,15 +637,38 @@ export default {
       }
     },
     savePipeline() {
-      let pipelineData = {
-        name: this.pipelineName,
-        diagram: JSON.stringify(this.data),
-        id: this.$route.params.pipelineId,
-      };
-      api.SAVE_PIPELINE_API(pipelineData).then((res) => {
-        this.$message.success("保存配置成功");
-        //this.$router.push({path: '/ci/job/' + this.$route.params.pipelineId});
-      });
+      let pipelineData = {};
+      let isSavePipeline = true
+      if(this.data.nodeList.length == 0){
+        this.$confirm("未进行配置，确定要保存？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        closeOnClickModal: false,
+        }).then(() => {
+          pipelineData = {
+            name: this.pipelineName,
+            diagram: JSON.stringify(this.data),
+            id: this.$route.params.pipelineId,
+          };
+          isSavePipeline = true
+        }).catch(() => {
+          isSavePipeline = false
+        });
+      } else {
+        pipelineData = {
+            name: this.pipelineName,
+            diagram: JSON.stringify(this.data),
+            id: this.$route.params.pipelineId,
+        };
+        isSavePipeline = true
+      }
+
+      if(isSavePipeline){
+        api.SAVE_PIPELINE_API(pipelineData).then((res) => {
+          this.$message.success("保存配置成功");
+        });
+      }
     },
   },
 };
