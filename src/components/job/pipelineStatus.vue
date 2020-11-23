@@ -104,9 +104,9 @@ export default {
         "节点名称:" +
         node.name +
         "\n开始时间:" +
-        node.log.StartTime?node.log.StartTime: "未开始" +
+        node.log.StartTime +
         "\n完成时间:" +
-        node.log.CompletionTime?node.log.CompletionTime: "未完成" +
+        node.log.CompletionTime +
         "\n" +
         "执行状态:" +
         node.log.Status +

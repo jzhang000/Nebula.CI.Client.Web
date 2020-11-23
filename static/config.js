@@ -9,5 +9,6 @@ const config = {
         post_logout_redirect_uri: "http://172.18.67.109:4200"
     },
     maxWorkflowNameLength: 20,
-    maxInputLength:50
+    maxInputLength:50,
+    title: "敏捷自动化测试平台"
 }
