@@ -44,7 +44,7 @@
             <a title="开始构建"
               ><img
                 src="/static/24x24/clock.png"
-                @click="runPipeline(record.id, record.name)"
+                @click="runPipeline(record.id, record.name, record.diagram)"
             /></a>
           </span>
         </a-table>
@@ -170,10 +170,14 @@ export default {
     handlePipelineClick(id) {
       this.$router.push({ path: "/ci/job/" + id });
     },
-    runPipeline(id, name) {
-      api.RUN_PIPELINE_API(id).then((res) => {
-        this.$message.success("Pipeline " + name + " 开始构建");
-      });
+    runPipeline(id, name, diagram) {
+      if(diagram && diagram != "{}"){
+        api.RUN_PIPELINE_API(id).then((res) => {
+          this.$message.success("Pipeline " + name + " 开始构建");
+        });
+      } else {
+        this.$message.error("工作流配置为空，请配置")
+      }
     },
   },
 };

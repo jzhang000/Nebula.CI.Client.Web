@@ -62,7 +62,12 @@ export default {
           that.dialogContent += "节点执行日志:\n" + "----------------------------\n"
           logs.forEach(task =>{
             if(task.Log){
-              that.dialogContent += "节点名称:" + task.TaskAnnoName + "\n开始时间:" + task.Log.StartTime + "\n完成时间:" + task.Log.CompletionTime + "\n" + "执行状态:" + task.Log.Status + "\n" + "执行日志:\n" + task.Log.Content + "\n"
+              let CompletionTime = "未结束"
+              if(task.Log.CompletionTime){
+                CompletionTime = task.Log.CompletionTime
+              }
+
+              that.dialogContent += "节点名称:" + task.TaskAnnoName + "\n开始时间:" + task.Log.StartTime + "\n完成时间:" + CompletionTime + "\n" + "执行状态:" + task.Log.Status + "\n" + "执行日志:\n" + task.Log.Content + "\n"
             } else {
               that.dialogContent += "节点名称:" + task.TaskAnnoName + "\n执行状态:未执行\n"
             }

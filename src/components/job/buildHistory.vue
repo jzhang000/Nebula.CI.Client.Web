@@ -4,20 +4,22 @@
       <a-collapse
         v-model="activeKey"
         expand-icon-position="left"
-        style="height: 100%"
+        style="height: 100%;width:100%"
       >
-        <a-collapse-panel key="1" header="构建历史" style="height: 100%">
+        <a-collapse-panel key="1" header="构建历史" style="height: 100%;width:100%">
           <div class="build-history">
             <a-list
               item-layout="vertical"
               size="small"
               :pagination="pagination"
               :data-source="listData"
+              style="width:100%"
             >
               <a-list-item
                 slot="renderItem"
                 key="item.title"
                 slot-scope="item, index"
+                style="width:100%"
               >
                 <div class="buildList">
                   <el-link :underline="false">
@@ -196,5 +198,9 @@ export default {
   display: flex;
   overflow: auto;
   height: 300px;
+  width:100%
+}
+.buildList {
+  width: 236px;
 }
 </style>

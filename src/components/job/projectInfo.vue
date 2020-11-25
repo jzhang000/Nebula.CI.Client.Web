@@ -3,91 +3,102 @@
     <div>
       <div>
         <label>型号名称：</label
-        ><a-input
+        ><el-input
+          size="small"
           class="leftInput"
           v-model="form.modelName"
           :maxLength="maxlength"
-          @change="check"
+          @blur="check"
         />
         <label class="rightLabel">软件名称：</label
-        ><a-input
+        ><el-input
+          size="small"
           class="rightInput"
           v-model="form.softwareName"
           :maxLength="maxlength"
-          @change="check"
+          @blur="check"
         />
       </div>
       <div class="labelDiv">
         <label>软件简称：</label
-        ><a-input
+        ><el-input
+          size="small"
           class="leftInput"
           v-model="form.softwareShort"
           :maxLength="maxlength"
-          @change="check"
+          @blur="check"
         />
         <label class="rightLabel">软件代号：</label
-        ><a-input
+        ><el-input
+          size="small"
           class="rightInput"
           v-model="form.softwareCode"
           :maxLength="maxlength"
-          @change="check"
+          @blur="check"
         />
       </div>
       <div class="labelDiv">
         <label>软件等级：</label
-        ><a-input
+        ><el-input
+          size="small"
           class="leftInput"
           v-model="form.softwareLevel"
           :maxLength="maxlength"
-          @change="check"
+          @blur="check"
         />
         <label class="rightLabel">所属系统：</label
-        ><a-input
+        ><el-input
+          size="small"
           class="rightInput"
           v-model="form.belongedSystem"
           :maxLength="maxlength"
-          @change="check"
+          @blur="check"
         />
       </div>
       <div class="labelDiv">
         <label>运行环境：</label
-        ><a-input
+        ><el-input
+          size="small"
           class="leftInput"
           v-model="form.runEnvironment"
           :maxLength="maxlength"
-          @change="check"
+          @blur="check"
         />
         <label class="rightLabel">研制部门：</label
-        ><a-input
+        ><el-input
+          size="small"
           class="rightInput"
           v-model="form.developDepartment"
           :maxLength="maxlength"
-          @change="check"
+          @blur="check"
         />
       </div>
       <div class="labelDiv">
         <label>项目总师：</label
-        ><a-input
+        ><el-input
+          size="small"
           class="leftInput"
           v-model="form.projectChief"
           :maxLength="maxlength"
-          @change="check"
+          @blur="check"
         />
         <label class="rightLabel">主任设计师：</label
-        ><a-input
+        ><el-input
+          size="small"
           class="leftInput"
           v-model="form.chiefDesigner"
           :maxLength="maxlength"
-          @change="check"
+          @blur="check"
         />
       </div>
       <div class="labelDiv">
         <label>开发人员：</label
-        ><a-input
+        ><el-input
+          size="small"
           class="leftInput"
           v-model="form.developer"
           :maxLength="maxlength"
-          @change="check"
+          @blur="check"
         />
       </div>
       <div class="btn">
@@ -141,7 +152,7 @@ export default {
           }
         })    
       } else {
-        this.$message.error("不允许特殊字符,请检查")
+        this.$message.error("保存失败,不允许特殊字符,请检查")
       }  
     },
     resetForm() {
@@ -160,13 +171,14 @@ export default {
         modelName: "",
       }
     },
-    check(value){
+    check(event){
+      let value = event.srcElement.value
       var reg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/
-      if(value.data && !reg.test(value.data)){
+      if(value && !reg.test(value)){
         this.$message.error("不允许特殊字符")
-        this.isHaveSpecialCharacter = false
+        this.noSpecialCharacter = false
       } else {
-        this.isHaveSpecialCharacter = true
+        this.noSpecialCharacter = true
       }
     }
   },

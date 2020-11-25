@@ -75,41 +75,44 @@ export default {
     onChange(e) {
       if (e.target.value == 0) {
         this.isTemplateSelected = false;
-        this.templateValue = this.templates[0].name;
+        if(this.templates.length > 0){
+          this.templateValue = this.templates[0].name;
+        }
       } else {
         this.isTemplateSelected = true;
       }
     },
     handleOk() {
-      if (this.name == "") {
-        this.$message.error("请输入工作流名称");
+      let that = this;
+
+      if (that.name == "") {
+        that.$message.error("请输入工作流名称");
         return;
       }
 
-      if (this.value == 1 && this.templateValue == "") {
-        this.$message.error("请选择模板");
+      if (that.value == 1 && that.templateValue == "") {
+        that.$message.error("请选择模板");
         return;
       }
 
-      if (this.name.length > config.maxWorkflowNameLength) {
-        this.$message.error("工作流名称过长，请调整长度");
+      if (that.name.length > config.maxWorkflowNameLength) {
+        that.$message.error("工作流名称过长，请调整长度");
         return;
       }
 
-      if (this.name.trim() == "") {
-        this.$message.error("工作流名称不能为空");
-        this.name = "";
+      if (that.name.trim() == "") {
+        that.$message.error("工作流名称不能为空");
+        that.name = "";
         return;
       }
 
       var reg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
       if (!reg.test(this.name.trim())) {
-        this.$message.error("工作流名称不允许特殊字符");
+        that.$message.error("工作流名称不允许特殊字符");
         return;
       }
 
-      if (this.name != this.odlName) {
-        let that = this;
+      if (that.name != that.odlName) {
         api.GET_PIPELINE_API().then(res => {
           let isPipelineNameUnique = true;
           res.forEach(pipeline => {

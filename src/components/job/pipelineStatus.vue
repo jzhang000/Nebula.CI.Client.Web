@@ -100,13 +100,18 @@ export default {
     handleSelect(node) {
       let content = ""
       if(node.log){
+        let CompletionTime = "未结束"
+        if(node.log.CompletionTime){
+          CompletionTime = node.log.CompletionTime
+        }
+
         content =
         "节点名称:" +
         node.name +
         "\n开始时间:" +
         node.log.StartTime +
         "\n完成时间:" +
-        node.log.CompletionTime +
+        CompletionTime +
         "\n" +
         "执行状态:" +
         node.log.Status +

@@ -156,7 +156,8 @@ export default {
       iframeWin: {},
       i: 0,
       pipelineName: "",
-      isExample : false
+      isExample : false,
+      isCircle: false
     };
   },
   // 一些基础配置移动该文件中
@@ -307,6 +308,14 @@ export default {
             this.$message.error("不支持两个节点之间连线回环");
             return false;
           }
+
+          console.log(this.findIsCircle(from, to))
+
+          if(this.isCircle){
+            this.$message.error("不允许节点之间连线回环");
+            return false;
+          }
+
           this.$message.success("连接成功");
           return true;
         });
@@ -317,6 +326,21 @@ export default {
         });
         this.jsPlumb.setContainer(this.$refs.efContainer);
       });
+    },
+    findIsCircle(fromId, targetId){
+      let line = this.data.lineList.find(l => l.to == fromId)
+      if(line){
+        this.findIsCircle(line.from, targetId)
+      } else {
+        if(fromId == targetId){
+          this.isCircle = true
+        } else {
+          this.isCircle = false
+        }
+      }
+    },
+    test(){
+      return true
     },
     // 加载流程图
     loadEasyFlow() {
@@ -582,14 +606,14 @@ export default {
         this.data.name = this.pipelineName;
         this.$nextTick(() => {
           this.jsPlumb = jsPlumb.getInstance();
-          try{
-            this.$nextTick(() => {
-              this.jsPlumbInit();
-            });
-          } catch(e){
-            this.data = tmpData
-            this.$message.error("导入的配置文件数据错误，请检查")
-          }
+          this.$nextTick(() => {
+              try{
+                this.jsPlumbInit(); 
+              } catch(e){
+                this.data = tmpData
+                this.$message.error("导入的配置文件数据错误，请检查")
+              }
+          });
         });
       });
     },
@@ -650,7 +674,6 @@ export default {
     },
     savePipeline() {
       let pipelineData = {};
-      let isSavePipeline = true
       if(this.data.nodeList.length == 0){
         this.$confirm("未进行配置，确定要保存？", "提示", {
         confirmButtonText: "确定",
@@ -663,9 +686,12 @@ export default {
             diagram: JSON.stringify(this.data),
             id: this.$route.params.pipelineId,
           };
-          isSavePipeline = true
+          
+          api.SAVE_PIPELINE_API(pipelineData).then((res) => {
+            this.$message.success("保存配置成功");
+          });
         }).catch(() => {
-          isSavePipeline = false
+          
         });
       } else {
         pipelineData = {
@@ -673,10 +699,7 @@ export default {
             diagram: JSON.stringify(this.data),
             id: this.$route.params.pipelineId,
         };
-        isSavePipeline = true
-      }
 
-      if(isSavePipeline){
         api.SAVE_PIPELINE_API(pipelineData).then((res) => {
           this.$message.success("保存配置成功");
         });
