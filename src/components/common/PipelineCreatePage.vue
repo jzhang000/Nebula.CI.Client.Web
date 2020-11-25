@@ -6,6 +6,7 @@
         placeholder="输入工作流名称"
         allowClear
         v-model="name"
+        :maxLength="maxLength"
         style="width: 300px; padding-left: 10px"
       />
     </div>
@@ -45,7 +46,8 @@ export default {
       value: 0,
       templateValue: "",
       isTemplateSelected: false,
-      templates: []
+      templates: [],
+      maxLength: config.maxWorkflowNameLength
     };
   },
   mounted() {},

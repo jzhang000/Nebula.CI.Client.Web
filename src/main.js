@@ -35,11 +35,5 @@ new Vue({
     template: '<App/>'
 })
 
- 
-router.beforeEach((to, from, next) => {
-    /* 路由发生变化修改页面title */
-    document.title = config.title
-    next()
-})
   
   

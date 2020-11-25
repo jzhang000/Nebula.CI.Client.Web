@@ -186,6 +186,7 @@ const router = new Router({
 })
 
 router.beforeEach(async(to, from, next) => {
+    document.title = config.title
     NProgress.start()
         // 验证当前路由所有的匹配中是否需要有登录验证的
     if (to.matched.some(r => r.meta.auth)) {

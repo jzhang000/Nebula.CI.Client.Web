@@ -571,6 +571,7 @@ export default {
     },
     // 加载流程图
     dataReload(data) {
+      let tmpData = this.data
       this.easyFlowVisible = false;
       this.data.nodeList = [];
       this.data.lineList = [];
@@ -581,9 +582,14 @@ export default {
         this.data.name = this.pipelineName;
         this.$nextTick(() => {
           this.jsPlumb = jsPlumb.getInstance();
-          this.$nextTick(() => {
-            this.jsPlumbInit();
-          });
+          try{
+            this.$nextTick(() => {
+              this.jsPlumbInit();
+            });
+          } catch(e){
+            this.data = tmpData
+            this.$message.error("导入的配置文件数据错误，请检查")
+          }
         });
       });
     },
@@ -617,13 +623,19 @@ export default {
     },
     //导入pipeline
     loadPipeline(file) {
-      const reader = new FileReader();
-      reader.readAsText(file);
-      reader.onload = (e) => {
-        console.log(e.target.result);
-        this.dataReload(JSON.parse(e.target.result));
-      };
-
+      if(file.name.endsWith(".json")){
+        const reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = (e) => {
+          try{
+            this.dataReload(JSON.parse(e.target.result));
+          } catch(e){
+            this.$message.error("导入的配置文件数据错误，请检查");
+          }
+        };
+      } else {
+        this.$message.error("导入的配置文件格式错误");
+      }
       return false;
     },
     handleIframeMessage(event) {
