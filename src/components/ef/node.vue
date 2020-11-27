@@ -120,7 +120,7 @@ export default {
           }
 
           if (value.length > config.maxWorkflowNameLength) {
-            this.$message.error("节点名称过长，请调整长度");
+            this.$message.error("节点名称超过20个字符，请调整长度");
             return;
           }
 

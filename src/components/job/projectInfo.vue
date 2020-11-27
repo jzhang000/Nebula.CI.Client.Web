@@ -1,7 +1,7 @@
 <template>
   <el-scrollbar style="height: 90%">
     <div>
-      <div>
+      <div style="min-width:1010px">
         <label>型号名称：</label
         ><el-input
           size="small"
@@ -188,6 +188,7 @@ export default {
 <style scoped>
 
 .labelDiv {
+  min-width: 1010px;
   padding-top: 30px;
 }
 

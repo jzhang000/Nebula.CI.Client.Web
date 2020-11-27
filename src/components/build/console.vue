@@ -6,7 +6,7 @@
       <img src="/static/32x32/red.png"  title="构建失败" v-else/>
       <strong>{{ pipelineName }}</strong> 第 <b>#{{ this.buildNo }}</b> 次构建
     </h1>
-      <el-scrollbar style="height:90%;background:#292A2B">
+      <el-scrollbar class="cosole-scroll">
       <div class="log">
         <codemirror
                 :value="dialogContent"
@@ -82,6 +82,9 @@ export default {
 }
 </script>
 <style scoped>
+.cosole-scroll {
+  height: calc(100% - 140px);
+}
 .log{
   overflow: scroll !important;
 }

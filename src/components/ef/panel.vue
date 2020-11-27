@@ -653,6 +653,12 @@ export default {
         reader.onload = (e) => {
           try{
             this.dataReload(JSON.parse(e.target.result));
+
+            this.activeElement.type = null;
+            this.activeElement.nodeId = null;
+            this.activeElement.nodeName = null;
+
+            this.src = "";
           } catch(e){
             this.$message.error("导入的配置文件数据错误，请检查");
           }

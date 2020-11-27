@@ -1,16 +1,17 @@
 <template>
   <div style="height:100%">
     <a-config-provider :locale="locale">
-    <a-collapse v-model="activeKey" expand-icon-position="left" style="height:100%">
-      <a-collapse-panel key="1" header="构建执行状态" style="height:100%">
+    <a-collapse v-model="activeKey" expand-icon-position="left" style="height:100%;width:100%">
+      <a-collapse-panel key="1" header="构建执行状态" style="height:100%;width:100%">
         <div class="build-history">
         <a-list
           item-layout="vertical"
           size="small"
           :pagination="pagination"
           :data-source="listData"
+          style="width:100%"
           >
-          <a-list-item slot="renderItem" key="item.title" slot-scope="item">
+          <a-list-item slot="renderItem" key="item.title" slot-scope="item" style="width:100%">
             <div>
               <el-link :underline="false"><img src="/static/16x16/red.png" title="构建失败" v-if="item.status == 'exception'"/>
               <img src="/static/16x16/blue.png"  title="构建成功" v-else-if="item.status == 'success'" />
