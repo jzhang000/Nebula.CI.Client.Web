@@ -3,7 +3,8 @@
     <el-scrollbar style="height:90%;">
       <span style="font-size:2rem">
             <img src="/static/32x32/blue.png"  title="构建成功" v-if="status == 'Succeeded'"/>
-            <img src="/static/32x32/nobuilt.png" title="没有构建" v-else-if="status == null"/>
+            <img src="/static/32x32/nobuilt.png" title="待构建" v-else-if="status == null"/>
+            <img src="/static/32x32/nobuilt.png" title="构建中" v-else-if="status == 'Running'"/>
             <img src="/static/32x32/red.png"  title="构建失败" v-else/>
             构建 &nbsp;#{{ this.buildNum }}({{ this.buildTime }})</span>
       <div style="text-align: center;padding-bottom:20px">

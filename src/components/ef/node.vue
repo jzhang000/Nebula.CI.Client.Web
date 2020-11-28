@@ -124,7 +124,7 @@ export default {
             return;
           }
 
-          var reg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+          var reg = /^[\u4e00-\u9fa5_+-a-zA-Z0-9]+$/;
           if (!reg.test(value.trim())) {
             this.$message.error("节点名称不允许特殊字符");
             return;

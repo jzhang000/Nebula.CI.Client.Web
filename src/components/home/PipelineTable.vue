@@ -173,7 +173,7 @@ export default {
     runPipeline(id, name, diagram) {
       if(diagram && diagram != "{}"){
         api.RUN_PIPELINE_API(id).then((res) => {
-          this.$message.success("Pipeline " + name + " 开始构建");
+          this.$message.success("工作流 " + name + " 开始构建");
         });
       } else {
         this.$message.error("工作流配置为空，请配置")

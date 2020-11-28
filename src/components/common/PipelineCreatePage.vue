@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="dialogVisible" ok-text="确认" cancel-text="取消" :title="title" @ok="handleOk">
+  <a-modal v-model="dialogVisible" ok-text="确认" cancel-text="取消" :maskClosable="modalClosable" :title="title" @ok="handleOk">
     <div>
       <label>工作流名称:</label>
       <a-input
@@ -39,6 +39,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      modalClosable: false,
       name: "",
       odlName: "",
       diagram: "{}",
