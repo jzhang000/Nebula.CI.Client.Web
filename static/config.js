@@ -1,5 +1,5 @@
 const config = {
-    baseUrl: "http://172.18.67.150",
+    baseUrl: "http://172.18.67.150:32100",
     oidcConfig: {
         authority: "http://172.18.67.150:32002",
         client_id: "Nebula.Identity",

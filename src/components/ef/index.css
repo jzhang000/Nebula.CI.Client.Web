@@ -216,7 +216,10 @@
     border-radius: 5px;
 }
 
-
+.line-active path{
+    stroke: #000;
+    stroke-width: 1;
+}
 /* label 为空的样式 */
 
 .emptyFlowLabel {}

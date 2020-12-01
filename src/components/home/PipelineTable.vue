@@ -171,10 +171,15 @@ export default {
       this.$router.push({ path: "/ci/job/" + id });
     },
     runPipeline(id, name, diagram) {
-      if(diagram && diagram != "{}"){
-        api.RUN_PIPELINE_API(id).then((res) => {
-          this.$message.success("工作流 " + name + " 开始构建");
-        });
+      if(diagram){
+        let diagramObj = JSON.parse(diagram)
+        if(diagramObj.nodeList.length > 0){
+          api.RUN_PIPELINE_API(id).then((res) => {
+            this.$message.success("工作流 " + name + " 开始构建");
+          });
+        } else {
+          this.$message.error("工作流配置为空，请配置")
+        }
       } else {
         this.$message.error("工作流配置为空，请配置")
       }

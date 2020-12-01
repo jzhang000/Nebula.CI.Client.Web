@@ -192,7 +192,7 @@ router.beforeEach(async(to, from, next) => {
     if (to.matched.some(r => r.meta.auth)) {
         // 这里暂时将cookie里是否存有token作为验证是否登录的条件
         // 请根据自身业务需要修改
-        const token = cookies.get('token')
+        const token = window.sessionStorage.getItem('token')
         if (token && token !== 'undefined') {
             next()
         } else {
@@ -201,9 +201,9 @@ router.beforeEach(async(to, from, next) => {
             var mgr = new Oidc.UserManager(setting.oidcConfig);
             mgr.getUser().then(async function(user) {
                 if (user) {
-                    cookies.set('username', user.profile.nickname)
-                    cookies.set('token', user.access_token)
-                    cookies.set('userId', user.profile.sub)
+                    window.sessionStorage.setItem('username', user.profile.nickname)
+                    window.sessionStorage.setItem('token', user.access_token)
+                    window.sessionStorage.setItem('userId', user.profile.sub)
                     next()
                 } else {
                     next({

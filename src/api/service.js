@@ -105,7 +105,7 @@ function createService() {
 function createRequestFunction(service) {
     const baseUrl = process.env.API_BASE_URL ? process.env.API_BASE_URL : config.baseUrl
     return function(config) {
-        const token = cookies.get('token')
+        const token = window.sessionStorage.getItem('token')
         const configDefault = {
             headers: {
                 Authorization: "Bearer " + token,

@@ -31,7 +31,7 @@
             @click="deleteElement"
             :hidden="!this.activeElement.type"
             style="color: red"
-            >删除节点</el-button
+            >删除</el-button
           >
           <div style="float: right">
             <el-upload
@@ -221,7 +221,7 @@ export default {
             that.dataReload(JSON.parse(res.diagram));
           }
 
-          let currentUserId = cookies.get("userId");
+          let currentUserId = window.sessionStorage.getItem("userId");
           if (res.userId == currentUserId) {
             that.isExample = false;
           } else {
@@ -246,16 +246,21 @@ export default {
         this.loadEasyFlow();
         // 单点击了连接线, https://www.cnblogs.com/ysx215/p/7615677.html
         this.jsPlumb.bind("click", (conn, originalEvent) => {
-          this.activeElement.type = "line";
-          this.activeElement.sourceId = conn.sourceId;
-          this.activeElement.targetId = conn.targetId;
-          /*
-                        this.$refs.nodeForm.lineInit({
-                            from: conn.sourceId,
-                            to: conn.targetId,
-                            label: conn.getLabel()
-                        })
-                        */
+           if(this.activeElement.type == 'line'){
+              var oldConn = this.jsPlumb.getConnections({
+                  source: this.activeElement.sourceId,
+                  target: this.activeElement.targetId
+              })[0]
+
+              oldConn.removeClass('line-active')
+            }
+
+            this.activeElement.type = 'line'
+            this.activeElement.sourceId = conn.sourceId
+            this.activeElement.targetId = conn.targetId
+            conn.addClass("line-active");
+
+            this.src = "";
         });
         // 连线
         this.jsPlumb.bind("connection", (evt) => {
@@ -308,8 +313,6 @@ export default {
             this.$message.error("不支持两个节点之间连线回环");
             return false;
           }
-
-          console.log(this.findIsCircle(from, to))
 
           if(this.isCircle){
             this.$message.error("不允许节点之间连线回环");
@@ -526,6 +529,19 @@ export default {
       return true;
     },
     clickNode(node) {
+      if(this.activeElement.type == 'line'){
+        var oldConn = this.jsPlumb.getConnections({
+          source: this.activeElement.sourceId,
+          target: this.activeElement.targetId
+        })[0]
+
+        oldConn.removeClass('line-active')
+      }
+
+      this.activeElement.type = "node";
+      this.activeElement.nodeId = node.id;
+      this.activeElement.nodeName = node.annoName;
+
       this.src = process.env.API_BASE_URL ? process.env.API_BASE_URL : config.baseUrl + node.configUrl
       //this.src = "http://172.18.67.109:8080";
       let iframes = document.getElementById("propertyIframe");
@@ -552,10 +568,6 @@ export default {
         },
         "*"
       );
-
-      this.activeElement.type = "node";
-      this.activeElement.nodeId = node.id;
-      this.activeElement.nodeName = node.annoName;
     },
     // 是否具有该线
     hasLine(from, to) {

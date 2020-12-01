@@ -22,14 +22,15 @@ import Oidc from "oidc-client";
 export default {
   data() {
     return {
-      username: cookies.get("username"),
+      username: window.sessionStorage.getItem("username"),
     };
   },
   computed: {},
   methods: {
     logOff() {
-      cookies.remove("username");
-      cookies.remove("token");
+      window.sessionStorage.removeItem("username");
+      window.sessionStorage.removeItem("token");
+      window.sessionStorage.removeItem("userId")
 
       var mgr = new Oidc.UserManager(setting.oidcConfig);
       mgr.signoutRedirect();

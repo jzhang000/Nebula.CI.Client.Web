@@ -101,7 +101,7 @@ export default {
       if(res){
         that.diagram = res.diagram
 
-        let currentUserId = cookies.get("userId")
+        let currentUserId = window.sessionStorage.getItem("userId")
         if(res.userId == currentUserId){
           that.isExample = false
         } else {
@@ -139,10 +139,15 @@ export default {
           });
           break;
         case "3":
-          if(this.diagram == "" || this.diagram == "{}"){
-            this.$message.error("工作流配置为空，请配置");
+          if(this.diagram){
+            let diagramObj = JSON.parse(this.diagram)
+            if(diagramObj.nodeList.length > 0){
+              this.buidlPipeline();
+            } else {
+              this.$message.error("工作流配置为空，请配置")
+            }
           } else {
-            this.buidlPipeline();
+            this.$message.error("工作流配置为空，请配置")
           }
           break;
         case "4":

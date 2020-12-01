@@ -9,6 +9,7 @@
           v-model="form.modelName"
           :maxLength="maxlength"
           @blur="check"
+          id="modelName"
         />
         <label class="rightLabel">软件名称：</label
         ><el-input
@@ -17,6 +18,7 @@
           v-model="form.softwareName"
           :maxLength="maxlength"
           @blur="check"
+          id="softwareName"
         />
       </div>
       <div class="labelDiv">
@@ -26,6 +28,7 @@
           class="leftInput"
           v-model="form.softwareShort"
           :maxLength="maxlength"
+          id="softwareShort"
           @blur="check"
         />
         <label class="rightLabel">软件代号：</label
@@ -35,6 +38,7 @@
           v-model="form.softwareCode"
           :maxLength="maxlength"
           @blur="check"
+          id="softwareCode"
         />
       </div>
       <div class="labelDiv">
@@ -45,6 +49,7 @@
           v-model="form.softwareLevel"
           :maxLength="maxlength"
           @blur="check"
+          id="softwareLevel"
         />
         <label class="rightLabel">所属系统：</label
         ><el-input
@@ -53,6 +58,7 @@
           v-model="form.belongedSystem"
           :maxLength="maxlength"
           @blur="check"
+          id="belongedSystem"
         />
       </div>
       <div class="labelDiv">
@@ -63,6 +69,7 @@
           v-model="form.runEnvironment"
           :maxLength="maxlength"
           @blur="check"
+          id="runEnvironment"
         />
         <label class="rightLabel">研制部门：</label
         ><el-input
@@ -71,6 +78,7 @@
           v-model="form.developDepartment"
           :maxLength="maxlength"
           @blur="check"
+          id="developDepartment"
         />
       </div>
       <div class="labelDiv">
@@ -81,6 +89,7 @@
           v-model="form.projectChief"
           :maxLength="maxlength"
           @blur="check"
+          id="projectChief"
         />
         <label class="rightLabel">主任设计师：</label
         ><el-input
@@ -89,6 +98,7 @@
           v-model="form.chiefDesigner"
           :maxLength="maxlength"
           @blur="check"
+          id="chiefDesigner"
         />
       </div>
       <div class="labelDiv">
@@ -99,6 +109,7 @@
           v-model="form.developer"
           :maxLength="maxlength"
           @blur="check"
+          id="developer"
         />
       </div>
       <div class="btn">
@@ -131,7 +142,6 @@ export default {
         modelName: "",
       },
       maxlength:config.maxInputLength,
-      noSpecialCharacter: true
     };
   },
   mounted() {
@@ -144,16 +154,12 @@ export default {
   },
   methods: {
     onSubmit() {
-      if(this.noSpecialCharacter){
-        let that = this;
+      let that = this;
         api.SET_PIPELINE_INFO(that.form).then(res =>{
           if(res == ""){
             that.$message.success('保存成功' );  
           }
         })    
-      } else {
-        this.$message.error("保存失败,不允许特殊字符,请检查")
-      }  
     },
     resetForm() {
       this.form =  {
@@ -173,12 +179,12 @@ export default {
     },
     check(event){
       let value = event.srcElement.value
-      var reg = /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/
+      var reg = /^[\u4e00-\u9fa5_a-zA-Z0-9\+\-]+$/
       if(value && !reg.test(value)){
         this.$message.error("不允许特殊字符")
-        this.noSpecialCharacter = false
-      } else {
-        this.noSpecialCharacter = true
+
+        let id = event.srcElement.id
+        this.form[id] = ""
       }
     }
   },
