@@ -42,7 +42,7 @@ export default {
       modalClosable: false,
       name: "",
       odlName: "",
-      diagram: "{}",
+      diagram: '{"name":"","nodeList":[],"lineList":[]}',
       title: "创建工作流",
       value: 0,
       templateValue: "",
@@ -132,7 +132,10 @@ export default {
                 that.diagram = template.diagram;
               }
 
-              api.CREATE_PIPELINE_API(that.name, that.diagram).then(res => {
+              let diagramCreate = JSON.parse(that.diagram);
+              diagramCreate.name = that.name;
+
+              api.CREATE_PIPELINE_API(that.name, JSON.stringify(diagramCreate)).then(res => {
                 that.$message.success("创建工作流成功");
 
                 that.$router.push({ path: "/ci/job/" + res.id + "/info" });
