@@ -412,6 +412,10 @@ export default {
               target: this.activeElement.targetId,
             })[0];
             this.jsPlumb.deleteConnection(conn);
+
+            this.activeElement.type = null;
+            this.activeElement.nodeId = null;
+            this.activeElement.nodeName = null;
           })
           .catch(() => {});
       }

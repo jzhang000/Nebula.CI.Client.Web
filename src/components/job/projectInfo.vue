@@ -3,113 +3,91 @@
     <div>
       <div style="min-width:1010px">
         <label>型号名称：</label
-        ><el-input
-          size="small"
+        ><a-input
           class="leftInput"
           v-model="form.modelName"
-          :maxLength="maxlength"
-          @blur="check"
           id="modelName"
+          @change="checkLength"
         />
         <label class="rightLabel">软件名称：</label
-        ><el-input
-          size="small"
+        ><a-input
           class="rightInput"
           v-model="form.softwareName"
-          :maxLength="maxlength"
-          @blur="check"
           id="softwareName"
+          @change="checkLength"
         />
       </div>
       <div class="labelDiv">
         <label>软件简称：</label
-        ><el-input
-          size="small"
+        ><a-input
           class="leftInput"
           v-model="form.softwareShort"
-          :maxLength="maxlength"
           id="softwareShort"
-          @blur="check"
+          @change="checkLength"
         />
         <label class="rightLabel">软件代号：</label
-        ><el-input
-          size="small"
+        ><a-input
           class="rightInput"
           v-model="form.softwareCode"
-          :maxLength="maxlength"
-          @blur="check"
           id="softwareCode"
+          @change="checkLength"
         />
       </div>
       <div class="labelDiv">
         <label>软件等级：</label
-        ><el-input
-          size="small"
+        ><a-input
           class="leftInput"
           v-model="form.softwareLevel"
-          :maxLength="maxlength"
-          @blur="check"
           id="softwareLevel"
+          @change="checkLength"
         />
         <label class="rightLabel">所属系统：</label
-        ><el-input
-          size="small"
+        ><a-input
           class="rightInput"
           v-model="form.belongedSystem"
-          :maxLength="maxlength"
-          @blur="check"
           id="belongedSystem"
+          @change="checkLength"
         />
       </div>
       <div class="labelDiv">
         <label>运行环境：</label
-        ><el-input
-          size="small"
+        ><a-input
           class="leftInput"
           v-model="form.runEnvironment"
-          :maxLength="maxlength"
-          @blur="check"
           id="runEnvironment"
+          @change="checkLength"
         />
         <label class="rightLabel">研制部门：</label
-        ><el-input
-          size="small"
+        ><a-input
           class="rightInput"
           v-model="form.developDepartment"
-          :maxLength="maxlength"
-          @blur="check"
           id="developDepartment"
+          @change="checkLength"
         />
       </div>
       <div class="labelDiv">
         <label>项目总师：</label
-        ><el-input
-          size="small"
+        ><a-input
           class="leftInput"
           v-model="form.projectChief"
-          :maxLength="maxlength"
-          @blur="check"
           id="projectChief"
+          @change="checkLength"
         />
         <label class="rightLabel">主任设计师：</label
-        ><el-input
-          size="small"
+        ><a-input
           class="leftInput"
           v-model="form.chiefDesigner"
-          :maxLength="maxlength"
-          @blur="check"
           id="chiefDesigner"
+          @change="checkLength"
         />
       </div>
       <div class="labelDiv">
         <label>开发人员：</label
-        ><el-input
-          size="small"
+        ><a-input
           class="leftInput"
           v-model="form.developer"
-          :maxLength="maxlength"
-          @blur="check"
           id="developer"
+          @change="checkLength"
         />
       </div>
       <div class="btn">
@@ -155,11 +133,11 @@ export default {
   methods: {
     onSubmit() {
       let that = this;
-        api.SET_PIPELINE_INFO(that.form).then(res =>{
-          if(res == ""){
-            that.$message.success('保存成功' );  
-          }
-        })    
+      api.SET_PIPELINE_INFO(that.form).then(res =>{
+        if(res == ""){
+          that.$message.success('保存成功');  
+        }
+      }) 
     },
     resetForm() {
       this.form =  {
@@ -185,6 +163,16 @@ export default {
 
         let id = event.srcElement.id
         this.form[id] = ""
+      }
+    },
+    checkLength(event){
+      let value = event.srcElement.value
+
+      if(value.length > this.maxlength){
+        this.$message.error("字符长度超过50个")
+
+        let id = event.srcElement.id
+        this.form[id] = value.substring(0,this.maxlength)
       }
     }
   },

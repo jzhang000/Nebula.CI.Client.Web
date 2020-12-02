@@ -109,8 +109,8 @@ export default {
       MessageBox.prompt("请输入新名称", "重命名", {
         confirmButtonText: "确定",
         inputValue: this.node.annoName,
-        inputPattern: /^[\da-z\u2E80-\u9FFF\+\-\_]{1,21}$/i,
-        inputErrorMessage: "节点名称不符合要求,请检查",
+        inputPattern: /^(?!.{21}|\s*$)/i,
+        inputErrorMessage: "节点名称长度为1-20且不允许空,请检查",
         cancelButtonText: "取消",
         closeOnClickModal: false,
         closeOnPressEscape: false
@@ -124,12 +124,6 @@ export default {
           if (value.length > config.maxWorkflowNameLength) {
             this.$message.error("节点名称超过20个字符，请调整长度");
             return;
-          }
-
-          var reg = /^[\u4e00-\u9fa5_a-zA-Z0-9\+\-]+$/
-          if (!reg.test(value.trim())) {
-            this.$message.error("节点名称不允许特殊字符");
-            return false;
           }
 
           this.node.annoName = value;
